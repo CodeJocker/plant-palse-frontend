@@ -4,7 +4,7 @@ import bg from "../assets/images/bg8.jpg";
 
 const Index = () => {
   return (
-    <div className="w-full min-h-screen px-4 md:px-12 py-12">
+    <div className="w-full min-h-screen px-4 md:px-12 py-12 bg-black">
       <div className="flex flex-col md:flex-row items-center justify-between h-full w-full max-w-6xl mx-auto gap-14">
         {/* Left Side */}
         <div className="flex-1 flex flex-col gap-y-8">
