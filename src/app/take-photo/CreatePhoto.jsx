@@ -4,13 +4,14 @@ import AiResponse from "../../components/AiResponse";
 // import ActionButtonComponents from "../../components/ActionButtonComponents";
 import CameraControll from "../../components/CameraControll";
 import TopSideComponent from "../../components/TopSide";
-import { CheckLine } from "lucide-react";
+import { ArrowLeft, CheckLine } from "lucide-react";
 import GalleryModal from "../../components/GalleryModal";
 import GridOverlay from "../../components/GridOverlay";
 import BottomControlls from "../../components/BottomControlls";
 import PhotoPreviewModal from "../../components/PhotoPreviewModal";
 import AiInputPannel from "../../components/AiInputPannel";
 import { useContentWrapper } from "../../components/ContentWrapper";
+import { useRouter } from "next/navigation";
 
 export default function ProfessionalAICamera() {
   const {
@@ -38,22 +39,44 @@ export default function ProfessionalAICamera() {
     zoom,
     history
   } = useContentWrapper();
-
+const router = useRouter()
   return (
     <div className="relative w-screen h-screen bg-green-900 overflow-hidden">
       {/* Professional Header */}
-      <div className="absolute top-0 left-0 w-full flex justify-between items-center px-6 py-4 z-30 bg-gradient-to-b from-black/80 via-black/40 to-transparent">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
-            <CheckLine />
+      <div className="absolute top-0 left-0 w-full flex flex-col gap-y-3 justify-between px-6 py-4 z-30 bg-gradient-to-b from-black/90 via-black/60 to-transparent shadow-lg">
+        {/* Return Button */}
+        <button
+          className="flex items-center gap-2 group hover:opacity-80 transition"
+          onClick={() => router.back()}
+        >
+          <span className="bg-green-700/80 p-2 rounded-xl flex items-center justify-center">
+            <ArrowLeft className="text-white group-hover:-translate-x-1 transition" />
+          </span>
+          <div className="text-white font-medium text-base group-hover:underline">
+            Return
           </div>
-          <div>
-            <h1 className="text-white font-semibold text-lg">AI Vision Pro</h1>
-            <p className="text-gray-300 text-xs">Intelligent Image Analysis</p>
+        </button>
+
+        {/* Center Info */}
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex gap-x-3">
+            <div className="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center shadow">
+              <CheckLine className="text-white" />
+            </div>
+            <div>
+              <h1 className="text-white font-bold text-xl leading-tight tracking-wide">
+                AI Vision Pro
+              </h1>
+              <p className="text-gray-300 text-xs font-medium">
+                Intelligent Image Analysis
+              </p>
+            </div>
           </div>
+          <TopSideComponent cameraReady={cameraReady} />
         </div>
 
-        <TopSideComponent cameraReady={cameraReady} />
+        {/* Spacer for alignment (optional, or add user/profile/settings here) */}
+        <div className="w-10" />
       </div>
       {/* Error Message */}
       {error && (

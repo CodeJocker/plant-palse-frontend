@@ -3,7 +3,7 @@ import { Grid2X2Icon, SwitchCamera } from "lucide-react";
 
 const CameraControll = ({ toggleCamera , setGridVisible , gridVisible , setFlashEnabled , flashEnabled }) => {
   return (
-    <div className="absolute top-20 right-6 flex flex-col gap-3 z-20">
+    <div className="absolute top-20 right-6 flex flex-col gap-3 py-10 z-20">
       {/* Camera Flip */}
       <button
         onClick={toggleCamera}
