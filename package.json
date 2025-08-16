@@ -23,6 +23,7 @@
     "swiper": "^11.2.10",
     "webcam": "^3.2.1"
   },
+  
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "24.3.0",
