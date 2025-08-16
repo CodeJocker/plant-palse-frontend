@@ -7,7 +7,7 @@ const NavBar = () => {
 
   return (
     <>
-      <header className="bg-white fixed top-0 left-0 w-full shadow-md z-50">
+      <header className="bg-black fixed top-0 left-0 w-full border-b border-slate-400 z-50">
         <nav className="flex justify-between items-center px-6 md:px-16 py-3">
           {/* Logo */}
           <h1 className="font-extrabold text-xl text-green-800 tracking-wide cursor-pointer">
@@ -28,14 +28,14 @@ const NavBar = () => {
 
       {/* Dropdown Menu */}
       <div
-        className={`absolute right-6 mt-20 bg-white shadow-lg rounded-2xl p-4 text-gray-900 text-right transition-all duration-300 ease-in-out transform ${
+        className={`fixed right-6 mt-20 bg-white p-4 text-green-600 text-right transition-all duration-300 ease-in-out transform ${
           open
             ? "opacity-100 scale-100"
             : "opacity-0 scale-95 pointer-events-none"
         }`}
       >
-        <p className="py-2 px-3 hover:bg-gray-100 rounded cursor-pointer">Profile</p>
-        <p className="py-2 px-3 hover:bg-gray-100 rounded cursor-pointer">Logout</p>
+        <p className="py-2 px-3 hover:bg-gray-100 rounded cursor-pointer w-full">Profile</p>
+        <p className="py-2 px-3 bg-red-600 hover:bg-red-800 text-white rounded cursor-pointer w-full">Logout</p>
       </div>
     </>
   );

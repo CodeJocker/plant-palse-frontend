@@ -15,11 +15,11 @@ const Index = () => {
               </span>
             </div>
             <h1 className="font-extrabold text-5xl md:text-6xl leading-tight mb-2 tracking-tight">
-              <span className="text-green-600 drop-shadow-lg">Smart</span>
-              <span className="text-gray-200">Green</span>
+              <span className="text-green-600 drop-shadow-lg">Plant</span>
+              <span className="text-gray-200">Pulse</span>
             </h1>
             <h2 className="text-2xl md:text-3xl font-mono text-gray-200 mb-4">
-              Welcome to the <span className="text-green-600">SmartGreen</span>{" "}
+              Welcome to the <span className="text-green-600">PlantPurse</span>{" "}
               Foundation
             </h2>
           </header>
@@ -37,7 +37,7 @@ const Index = () => {
               src={bg.src}
               width={500}
               height={500}
-              alt="SmartGreen Foundation"
+              alt="PlantPulse Foundation"
               className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
               priority
             />
