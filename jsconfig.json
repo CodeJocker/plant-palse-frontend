@@ -1,7 +1,8 @@
+// removed the open slash from the alias for simplicity now every alias you not use the '@/' you use the '@'
 {
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"]
+      "@*": ["./src/*"],
     }
   }
 }
