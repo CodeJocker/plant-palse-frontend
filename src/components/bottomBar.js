@@ -10,8 +10,8 @@ export default function BottomNav() {
   const navItems = [
     { id: "home", label: "Home", icon: <FaHome /> , href:"/" },
     { id: "Bot", label: "Bot", icon: <FaRobot /> , href:"/ai" },
-    { id: "medicine", label: "Medicine", icon: <ShoppingCart /> , href:"/" },
-    { id: "leaf", label: "Leaf", icon: <FaLeaf /> , href:"/" },
+    { id: "leaf", label: "Leaf", icon: <FaLeaf /> , href:"/medecine" },
+    // { id: "medicine", label: "Medicine", icon: <ShoppingCart /> , href:"/" },
   ];
 
   return (

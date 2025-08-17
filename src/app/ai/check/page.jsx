@@ -1,19 +1,17 @@
 "use client";
-import { useRef, useState } from "react";
+
+import { useRef, useState, useEffect } from "react";
+import axios from "axios"; // ✅ use axios for API calls
 import {
   Bot,
   FileText,
-  Image,
   Leaf,
   Loader2,
   MapPin,
   Sparkles,
-  X,
-  Camera,
-  Upload,
-  CheckCircle,
   AlertCircle,
-  Stethoscope
+  CheckCircle,
+  Stethoscope,
 } from "lucide-react";
 import NavBar from "../../../components/heading";
 import BottomNav from "../../../components/bottomBar";
@@ -24,15 +22,8 @@ const initialForm = {
   location: "",
 };
 
-const AiInputPanel = ({
-  showAIInput = true,
-  handleCloseAIInput,
-  usedPhoto,
-  onClose,
-}) => {
+const AiInputPanel = ({ showAIInput = true }) => {
   const [form, setForm] = useState(initialForm);
-//   const [image, setImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState("");
   const [showTypewriter, setShowTypewriter] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [aiResponse, setAiResponse] = useState("");
@@ -40,74 +31,52 @@ const AiInputPanel = ({
   const fileInputRef = useRef();
 
   // Handle form field change
-  const handleChange = (e) => {
-    setForm((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  // Handle image upload
-//   const handleImageChange = (e) => {
-//     const file = e.target.files[0];
-//     setImage(file);
-//     if (file) {
-//       setImagePreview(URL.createObjectURL(file));
-//     } else {
-//       setImagePreview("");
-//     }
-//   };
-
-  // Submit form and send to AI
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setIsProcessing(true);
-  setAiResponse("");
-  setError("");
-  setShowTypewriter(false);
-
-  try {
-    const res = await api.post("/ai/diagnose", {
-      plantType: form.plantType,
-      symptoms: form.symptoms,
-      location: form.location,
-    });
-
-    const data = res.data;
-    setAiResponse(
-      data?.data?.diagnosis ||
-        data?.data?.response ||
-        data?.message ||
-        "No diagnosis available."
-    );
-    setShowTypewriter(true);
-
-    // only use this if you actually want a history feature
-    // setHistory((prev) => [...prev, { form, aiResponse: data }]);
-  } catch (err) {
-    console.error(err);
-    setAiResponse("");
-    setError("Sorry, there was a problem contacting the AI server.");
-  } finally {
-    setIsProcessing(false);
-  }
+const handleChange = (e) => {
+  setForm((prev) => ({
+    ...prev,
+    [e.target.name]: e.target.value,
+  }));
 };
 
 
-//   const removeImage = () => {
-//     setImage(null);
-//     setImagePreview("");
-//     if (fileInputRef.current) {
-//       fileInputRef.current.value = "";
-//     }
-//   };
+  // Submit form and send to AI
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsProcessing(true);
+    setAiResponse("");
+    setError("");
+    setShowTypewriter(false);
+
+    try {
+      const res = await axios.post("/api/ai/diagnose", {
+        plantType: form.plantType,
+        symptoms: form.symptoms,
+        location: form.location,
+      });
+
+      const data = res.data;
+      setAiResponse(
+        data?.data?.diagnosis ||
+          data?.data?.response ||
+          data?.message ||
+          "No diagnosis available."
+      );
+      setShowTypewriter(true);
+    } catch (err) {
+      console.error(err);
+      setAiResponse("");
+      setError("Sorry, there was a problem contacting the AI server.");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   if (!showAIInput) return null;
 
   return (
     <>
       <NavBar />
-      <div className=" flex items-center justify-center backdrop-blur-sm py-24 px-5">
+      <div className="flex items-center justify-center backdrop-blur-sm py-24 px-5">
         <div className="relative bg-white rounded-2xl shadow-2xl border border-gray-200 max-w-6xl w-full max-h-[90vh] overflow-hidden">
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gradient-to-r from-emerald-50 to-blue-50">
@@ -129,7 +98,7 @@ const handleSubmit = async (e) => {
           <div className="flex flex-col lg:flex-row">
             {/* Left Panel - Input Form */}
             <div className="flex-1 p-6 space-y-6 bg-gray-50">
-              <div className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Plant Type Field */}
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-gray-700">
@@ -150,6 +119,7 @@ const handleSubmit = async (e) => {
                 </div>
 
                 {/* Symptoms Field */}
+                {/* Symptoms Field */}
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-gray-700">
                     Symptoms Description *
@@ -160,10 +130,28 @@ const handleSubmit = async (e) => {
                       name="symptoms"
                       value={form.symptoms}
                       onChange={handleChange}
-                      placeholder="Describe what you're observing: discoloration, spots, wilting, growth issues, etc."
-                      className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
+                      placeholder="Describe symptoms..."
+                      className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                       rows={4}
                       required
+                    />
+                  </div>
+                </div>
+
+                {/* Location Field */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Growing Environment
+                  </label>
+                  <div className="relative">
+                    <MapPin className="absolute left-3 top-3 w-5 h-5 text-purple-500" />
+                    <input
+                      type="text"
+                      name="location"
+                      value={form.location}
+                      onChange={handleChange}
+                      placeholder="e.g., Indoor pot, Garden bed"
+                      className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -186,13 +174,9 @@ const handleSubmit = async (e) => {
                   </div>
                 </div>
 
-                {/* Image Upload */}
-               
-
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  onClick={handleSubmit}
                   disabled={isProcessing || !form.plantType || !form.symptoms}
                   className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white py-3 px-4 rounded-lg font-medium hover:from-emerald-700 hover:to-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm"
                 >
@@ -215,7 +199,7 @@ const handleSubmit = async (e) => {
                     <p className="text-sm text-red-700">{error}</p>
                   </div>
                 )}
-              </div>
+              </form>
             </div>
 
             {/* Right Panel - AI Response */}
@@ -309,6 +293,20 @@ const handleSubmit = async (e) => {
   );
 };
 
-// Typewriter effect component
-  
+// ✅ Typewriter effect component
+const TypewriterText = ({ text, speed = 25 }) => {
+  const [displayed, setDisplayed] = useState("");
+  useEffect(() => {
+    let i = 0;
+    const interval = setInterval(() => {
+      setDisplayed(text.slice(0, i + 1));
+      i++;
+      if (i >= text.length) clearInterval(interval);
+    }, speed);
+    return () => clearInterval(interval);
+  }, [text, speed]);
+
+  return <span>{displayed}</span>;
+};
+
 export default AiInputPanel;

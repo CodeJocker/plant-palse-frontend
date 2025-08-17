@@ -3,6 +3,7 @@ import { Bot, Search } from "lucide-react";
 import Link from "next/link";
 import BottomNav from "../../components/bottomBar";
 import NavBar from "../../components/heading";
+import { FaUserDoctor } from "react-icons/fa6";
 
 const features = [
   {
@@ -19,6 +20,14 @@ const features = [
       "Prompt plant diseases by describing symptoms or uploading images. Let AI help you identify issues.",
     icon: <Bot className="w-8 h-8 text-blue-400" />,
     href: "/ai/prompt",
+    color: "from-blue-700 to-blue-500",
+  },
+  {
+    title: "Diagnose using symptomes",
+    description:
+      "Provide plant symptomes orand upload image uploading images. Let AI help you identify issues.",
+    icon: <FaUserDoctor className="w-8 h-8 text-blue-400" />,
+    href: "/ai/check",
     color: "from-blue-700 to-blue-500",
   },
 ];
