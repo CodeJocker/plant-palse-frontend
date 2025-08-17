@@ -1,8 +1,13 @@
+'use client'
 import BottomNav from "../../components/bottomBar";
 import Card from "../components/card";
 import NavBar from "../../components/heading";
+import { useRouter } from "next/navigation"
 
 const Home = () => {
+  
+  
+  
   const cards = [
     {
       image: "/images/detection.jpg",
