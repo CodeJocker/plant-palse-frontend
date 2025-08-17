@@ -3,6 +3,9 @@ import { Bot, FileText, History } from "lucide-react";
 import Link from "next/link";
 import NavBar from "../../../components/heading";
 import BottomNav from "../../../components/bottomBar";
+import { HiArrowLeft } from "react-icons/hi";
+
+
 
 const promptFeatures = [
     {
@@ -27,7 +30,16 @@ const page = () => {
   return (
       <div className="
        flex flex-col items-center py-28 px-4">
-          <NavBar />
+              {/* Top Nav */}
+<div className="fixed top-0 left-0 flex items-center  shadow-lg px-4 py-4 bg-white w-full h-14 z-50">
+  <Link href="/ai" className="flex items-center gap-2">
+    <HiArrowLeft className="text-black text-xl" />
+  </Link>
+  <h2 className="absolute left-1/3 transform -translate-x-1/2 text-black font-semibold text-base sm:text-lg truncate">
+   Ai prompt Panel
+  </h2>
+</div>
+
       <h1 className="text-3xl font-bold text-white mb-10 tracking-tight text-center">
         AI Prompt Features
       </h1>
@@ -45,10 +57,10 @@ const page = () => {
               {f.icon}
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-white mb-1 group-hover:text-green-400 transition">
+              <h2 className="text-lg font-semibold text-green-800 mb-1 group-hover:text-green-400 transition">
                 {f.title}
               </h2>
-              <p className="text-gray-300 text-base">{f.description}</p>
+              <p className="text-black text-base">{f.description}</p>
             </div>
           </Link>
         ))}

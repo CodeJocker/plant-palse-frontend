@@ -53,7 +53,7 @@ const SignUp = () => {
             Create Account
           </h1>
           <p className="text-gray-400 text-sm">
-            Join SmartGreen and start your journey
+            Join plantPulse and start your journey
           </p>
         </div>
 
