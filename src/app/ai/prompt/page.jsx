@@ -25,7 +25,8 @@ const promptFeatures = [
 
 const page = () => {
   return (
-      <div className="theme flex flex-col items-center py-28 px-4">
+      <div className="
+       flex flex-col items-center py-28 px-4">
           <NavBar />
       <h1 className="text-3xl font-bold text-white mb-10 tracking-tight text-center">
         AI Prompt Features
@@ -35,7 +36,7 @@ const page = () => {
           <Link
             href={f.href}
             key={f.title}
-            className={`group bg-[#20262d] rounded-2xl shadow-xl border border-green-400/20 hover:border-green-400/60 transition-all p-7 flex flex-col gap-4 hover:scale-[1.03] hover:shadow-2xl`}
+            className={`group bg-gray-100 rounded-2xl shadow-xl border border-green-400/20 hover:border-green-400/60 transition-all p-7 flex flex-col gap-4 hover:scale-[1.03] hover:shadow-2xl`}
             style={{ minHeight: 180 }}
           >
             <div
