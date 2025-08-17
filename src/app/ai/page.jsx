@@ -4,6 +4,7 @@ import Link from "next/link";
 import BottomNav from "../../components/bottomBar";
 import NavBar from "../../components/heading";
 import { FaUserDoctor } from "react-icons/fa6";
+// import { useRouter } from "next/navigation";
 
 const features = [
   {
@@ -33,6 +34,7 @@ const features = [
 ];
 
 const page = () => {
+  //  const router = useRouter();
   return (
     <>
       <NavBar />

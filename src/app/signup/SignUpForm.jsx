@@ -45,7 +45,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-black">
+    <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-white">
       <div className="relative z-10 w-full max-w-md p-8 backdrop-blur-xl">
         <div className="flex flex-col items-center mb-6">
           <CircleUserRound className="w-14 h-14 text-green-400 mb-2" />

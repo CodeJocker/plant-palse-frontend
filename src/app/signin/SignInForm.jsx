@@ -2,17 +2,20 @@
 import React, { useState } from "react";
 import { Mail, Lock, LogIn, ArrowRight, CircleUserRound } from "lucide-react";
 import Link from "next/link";
+// import Router from "next/router";
 
 const SignInForm = () => {
 
   const submitdata = (e) => {
     e.preventDefault();
 
+    // const {} = Router()
+
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
 
     // Send data to backend login endpoint
-    fetch('http://localhost:3000/api/register', {
+    fetch('http://localhost:4000/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'JSON'
