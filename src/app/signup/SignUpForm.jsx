@@ -113,7 +113,7 @@ const SignUp = () => {
         <p className="text-center text-gray-600 text-sm mt-6">
           Already have an account?{" "}
           <Link href="/signin" className="text-green-600 hover:underline cursor-pointer flex items-center gap-1 justify-center">
-            <LogIn className="w-4 h-4" /> Login
+            Login
           </Link>
         </p>
       </div>
