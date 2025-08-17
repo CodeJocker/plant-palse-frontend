@@ -53,10 +53,10 @@ const page = () => {
               {f.icon}
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-white mb-1 group-hover:text-green-400 transition">
+              <h2 className="text-lg font-semibold text-green-800 mb-1 group-hover:text-green-400 transition">
                 {f.title}
               </h2>
-              <p className="text-gray-300 text-base">{f.description}</p>
+              <p className="text-black text-base">{f.description}</p>
             </div>
           </Link>
         ))}
