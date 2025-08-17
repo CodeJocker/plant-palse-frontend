@@ -1,5 +1,5 @@
 "use client";
-import ForecastCard from "@/components/ForecastCard";
+import ForecastCard from "../../components/ForecastCard";
 import { HiArrowLeft } from "react-icons/hi";
 import { HiExclamationCircle } from "react-icons/hi";
 

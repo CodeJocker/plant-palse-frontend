@@ -33,11 +33,11 @@ const handlePredict = async () => {
       formData.append("file", blob, "image.jpg");
     }
 
-    const res = await axios.post("http://localhost:8000/predict", formData, {
+    const res = await axios.post("http://localhost:5005/predict", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
 
-    setAiResponse(res.data);
+    setAiResponse(res.data.result);
   } catch (err) {
     console.error(err);
     setError(
@@ -97,28 +97,41 @@ const handlePredict = async () => {
         </button>
 
         {/* Response */}
-{/* Response */}
-{aiResponse && (
-  <div className="mt-6 p-4 bg-green-50 rounded-xl border border-green-400 shadow">
-    <h3 className="font-bold text-green-700 text-lg mb-2">
-      ✅ Prediction Result
-    </h3>
-    {aiResponse.label ? (
-      <p className="text-gray-800">
-        <span className="font-semibold">Disease:</span>{" "}
-        {aiResponse.label}
-        <br />
-        <span className="font-semibold">Confidence:</span>{" "}
-        {(aiResponse.confidence * 100).toFixed(2)}%
-      </p>
-    ) : (
-      <pre className="text-sm text-gray-600 whitespace-pre-wrap">
-        {JSON.stringify(aiResponse, null, 2)}
-      </pre>
-    )}
-  </div>
-)}
+        {/* Response */}
+        {/* Response */}
+        {aiResponse && (
+          <div className="mt-6 p-6 bg-green-50 rounded-2xl border border-green-400 shadow-lg">
+            <h3 className="font-bold text-green-800 text-xl mb-4 flex items-center gap-2">
+              <Bot className="w-6 h-6" />✅ Prediction Result
+            </h3>
 
+            {/* Split the response into sections if possible */}
+            {aiResponse.split("\n").map((line, index) => {
+              // Highlight section headers like "Disease Name:", "Causes:", etc.
+              const isHeader =
+                /Disease Name:|Causes:|Prevention & Remedies:/i.test(line);
+              return (
+                <p
+                  key={index}
+                  className={`mb-2 ${
+                    isHeader
+                      ? "font-semibold text-green-700"
+                      : "text-gray-800 pl-4"
+                  }`}
+                >
+                  {line}
+                </p>
+              );
+            })}
+
+            {/* Optional: confidence badge */}
+            {aiResponse.confidence && (
+              <div className="mt-4 inline-block bg-green-200 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">
+                Confidence: {(aiResponse.confidence * 100).toFixed(2)}%
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Error */}
         {error && (

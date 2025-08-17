@@ -15,7 +15,7 @@ const SignInForm = () => {
     let password = document.getElementById('password').value;
 
     // Send data to backend login endpoint
-    fetch('http://localhost:4000/api/login', {
+    fetch('http://localhost:3000/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'JSON'
@@ -28,8 +28,12 @@ const SignInForm = () => {
           // Save token and user info
           localStorage.setItem('token', data.token);
           localStorage.setItem('user', JSON.stringify(data.user));
-          console.log('Login successful:', data.user);
-          window.location.href = '/dashboard';
+          window.localStorage.setItem('token', data.token);
+          window.location.href = '/features';
+          if (typeof window !== "undefined") {
+  localStorage.setItem("token", userToken);
+  document.cookie = `token=${userToken}; path=/; max-age=3600`; // expires in 1h
+}
         } else {
           alert(data.error || 'Login failed');
         }

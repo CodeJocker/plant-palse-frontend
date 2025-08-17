@@ -1,5 +1,5 @@
 "use client"
-import { Bot, ShoppingCart } from "lucide-react";
+import { Bot, Cloud, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { FaHome, FaCamera, FaLeaf, FaPills, FaRobot } from "react-icons/fa";
@@ -11,7 +11,7 @@ export default function BottomNav() {
     { id: "home", label: "Home", icon: <FaHome /> , href:"/" },
     { id: "Bot", label: "Bot", icon: <FaRobot /> , href:"/ai" },
     { id: "leaf", label: "Leaf", icon: <FaLeaf /> , href:"/medecine" },
-    // { id: "medicine", label: "Medicine", icon: <ShoppingCart /> , href:"/" },
+    { id: "climate", label: "Medicine", icon: <Cloud   /> , href:"/crop-information" },
   ];
 
   return (
