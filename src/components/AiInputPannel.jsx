@@ -8,36 +8,48 @@ const AiInputPannel = ({ showAIInput, handleCloseAIInput, usedPhoto }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [aiResponse, setAiResponse] = useState(null);
   const [error, setError] = useState("");
+  
+const handlePredict = async () => {
+  if (!usedPhoto) {
+    setError("⚠️ Please upload an image before predicting.");
+    return;
+  }
 
-  const handlePredict = async () => {
-    if (!usedPhoto) {
-      setError("⚠️ Please upload an image before predicting.");
-      return;
+  setIsProcessing(true);
+  setAiResponse(null);
+  setError("");
+
+  try {
+    const formData = new FormData();
+
+    // ✅ If it's already a File, send directly
+    if (usedPhoto instanceof File) {
+      formData.append("file", usedPhoto);
+    }
+    // ✅ If it's a string (URL), fetch it and convert to Blob
+    else if (typeof usedPhoto === "string") {
+      const response = await fetch(usedPhoto);
+      const blob = await response.blob();
+      formData.append("file", blob, "image.jpg");
     }
 
-    setIsProcessing(true);
-    setAiResponse(null);
-    setError("");
+    const res = await axios.post("http://localhost:8000/predict", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
 
-    try {
-      const formData = new FormData();
-      formData.append("file", usedPhoto); // must match multer field in Node.js
+    setAiResponse(res.data);
+  } catch (err) {
+    console.error(err);
+    setError(
+      err.response?.data?.details ||
+        err.response?.data?.message ||
+        "❌ Error contacting prediction service."
+    );
+  } finally {
+    setIsProcessing(false);
+  }
+};
 
-      const res = await axios.post("http://localhost:8000/predict", formData
-      );
-
-      setAiResponse(res.data);
-    } catch (err) {
-      console.error(err);
-      setError(
-        err.response?.data?.details ||
-          err.response?.data?.message ||
-          "❌ Error contacting prediction service."
-      );
-    } finally {
-      setIsProcessing(false);
-    }
-  };
 
   if (!showAIInput) return null;
 
