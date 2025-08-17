@@ -1,6 +1,6 @@
-import React from 'react'
-import SignUp from './SignUpForm'
-import NavBar from '../../components/heading'
+import React from "react";
+import NavBar from "../../components/heading";
+import SignInForm from "./SignInForm";
 // import BottomNav from '../../components/bottomBar';
 
 const page = () => {
@@ -10,10 +10,10 @@ const page = () => {
         <NavBar />
       </div>
       <div className="form">
-        <SignUp />
+        <SignInForm />
       </div>
     </div>
   );
-}
+};
 
-export default page
+export default page;
