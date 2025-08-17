@@ -16,10 +16,10 @@ const Index = () => {
             </div>
             <h1 className="font-extrabold text-5xl md:text-6xl leading-tight mb-2 tracking-tight">
               <span className="text-green-600 drop-shadow-lg">Plant</span>
-              <span className="text-gray-200">Pulse</span>
+              <span className="text-gray-200">Palse</span>
             </h1>
             <h2 className="text-2xl md:text-3xl font-mono text-gray-200 mb-4">
-              Welcome to the <span className="text-green-600">PlantPurse</span>{" "}
+              Welcome to the <span className="text-green-600">PlantPalse</span>{" "}
               Foundation
             </h2>
           </header>
