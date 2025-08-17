@@ -45,7 +45,7 @@ const Home = () => {
         <h1 className="text-4xl font-extrabold text-green-700 mb-4 tracking-tight text-center drop-shadow-lg">
           Plant Pulse
         </h1>
-        <p className="text-lg text-gray-200 mb-10 text-center max-w-2xl">
+        <p className="text-lg text-black mb-10 text-center max-w-2xl">
           Your all-in-one platform for smart plant care, disease detection, and
           crop management. Explore our features below!
         </p>
@@ -65,7 +65,7 @@ const Home = () => {
               <h2 className="text-xl font-semibold text-green-600 mb-2 text-center group-hover:text-green-600 transition">
                 {card.title}
               </h2>
-              <p className="text-gray-200 text-sm mb-4 text-center">
+              <p className="text-black text-sm mb-4 text-center">
                 {card.description}
               </p>
               <a
