@@ -27,6 +27,10 @@ const SignInForm = () => {
           localStorage.setItem('user', JSON.stringify(data.user));
           window.localStorage.setItem('token', data.token);
           window.location.href = '/features';
+          if (typeof window !== "undefined") {
+  localStorage.setItem("token", userToken);
+  document.cookie = `token=${userToken}; path=/; max-age=3600`; // expires in 1h
+}
         } else {
           alert(data.error || 'Login failed');
         }

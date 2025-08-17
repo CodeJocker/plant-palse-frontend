@@ -1,6 +1,10 @@
 'use client'
+
 import { FaUser } from "react-icons/fa";
 import { useState } from "react";
+import Link from "next/link";
+
+
 
 const NavBar = () => {
   const [open, setOpen] = useState(false);
@@ -35,7 +39,7 @@ const NavBar = () => {
         }`}
       >
         <p className="py-2 px-3 hover:bg-gray-100 rounded cursor-pointer w-full">Profile</p>
-        <p className="py-2 px-3 bg-red-600 hover:bg-red-800 text-white rounded cursor-pointer w-full">Logout</p>
+        <a href="/signin"><p className="py-2 px-3 bg-red-600 hover:bg-red-800 text-white rounded cursor-pointer w-full">Logout</p></a>
       </div>
     </>
   );
