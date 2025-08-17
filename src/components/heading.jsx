@@ -35,7 +35,7 @@ const NavBar = () => {
         }`}
       >
         <p className="py-2 px-3 hover:bg-gray-100 rounded cursor-pointer w-full">Profile</p>
-        <p className="py-2 px-3 bg-red-600 hover:bg-red-800 text-white rounded cursor-pointer w-full">Logout</p>
+       
       </div>
     </>
   );
