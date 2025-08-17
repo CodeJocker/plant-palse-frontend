@@ -1,16 +1,13 @@
-// import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Comfortaa } from "next/font/google";
 import "./globals.css";
 // import Provider from "@components/Provider";
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+const comforta = Comfortaa({
+  variable: "--font-comfortaa",
+  subsets: ["latin"],
+  weight: ["400", "700"], // You can specify available weights here
+  display: "swap", // Optional: improves font loading
+}); 
 
 export const metadata = {
   title: "Climate app",
@@ -20,15 +17,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className=""
-        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-        {/* <Provider>
-        </Provider> */}
-      </body>
-
+      <body className={`${comforta.variable} antialiased bg-gray-100`}>{children}</body>
     </html>
   );
 }
