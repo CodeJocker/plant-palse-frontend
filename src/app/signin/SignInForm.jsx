@@ -1,15 +1,44 @@
-import React from "react";
+'use client'
+import React, { useState } from "react";
 import { Mail, Lock, LogIn, ArrowRight, CircleUserRound } from "lucide-react";
 import Link from "next/link";
 
 const SignInForm = () => {
+
+  const submitdata = (e) => {
+    e.preventDefault();
+
+    let email = document.getElementById('email').value;
+    let password = document.getElementById('password').value;
+
+    // Send data to backend login endpoint
+    fetch('http://localhost:3000/api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'JSON'
+      },
+      body: JSON.stringify({ email, password })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.ok) {
+          // Save token and user info
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
+          console.log('Login successful:', data.user);
+          window.location.href = '/dashboard';
+        } else {
+          alert(data.error || 'Login failed');
+        }
+      })
+      .catch(err => {
+        console.error('Error:', err);
+        alert('Failed to connect to backend');
+      });
+  };
+
   return (
     <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-black">
-      {/* Blobs */}
-      {/* <div className="absolute -top-24 -left-24 w-72 h-72 bg-green-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
-      <div className="absolute top-1/2 -right-20 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
-      <div className="absolute bottom-[-100px] left-1/3 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div> */}
-
       <div className="relative z-10 w-full max-w-md p-8 backdrop-blur-xl">
         <div className="flex flex-col items-center mb-6">
           <CircleUserRound className="w-14 h-14 text-green-400 mb-2" />
@@ -23,10 +52,7 @@ const SignInForm = () => {
 
         <form className="space-y-5">
           <div>
-            <label
-              htmlFor="email"
-              className="block text-xs text-gray-400 mb-1 font-medium"
-            >
+            <label htmlFor="email" className="block text-xs text-gray-400 mb-1 font-medium">
               Email
             </label>
             <div className="relative">
@@ -40,11 +66,9 @@ const SignInForm = () => {
               />
             </div>
           </div>
+
           <div>
-            <label
-              htmlFor="password"
-              className="block text-xs text-gray-400 mb-1 font-medium"
-            >
+            <label htmlFor="password" className="block text-xs text-gray-400 mb-1 font-medium">
               Password
             </label>
             <div className="relative">
@@ -60,6 +84,7 @@ const SignInForm = () => {
           </div>
 
           <button
+            onClick={submitdata}
             type="submit"
             className="w-full flex items-center justify-center gap-2 bg-green-600 text-white py-3 rounded-md font-semibold shadow-lg hover:opacity-90 transition text-base"
           >
@@ -119,4 +144,4 @@ const SignInForm = () => {
   );
 };
 
-export default SignInForm
+export default SignInForm;

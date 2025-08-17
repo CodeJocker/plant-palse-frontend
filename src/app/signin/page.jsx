@@ -1,7 +1,7 @@
 import React from "react";
 import NavBar from "../../components/heading";
 import SignInForm from "./SignInForm";
-// import BottomNav from '../../components/bottomBar';
+
 
 const page = () => {
   return (
