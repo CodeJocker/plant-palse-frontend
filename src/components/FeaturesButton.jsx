@@ -8,7 +8,7 @@ const FeaturesButton = () => {
     const [isHovered , setIsHovered] = useState(false)
   return (
     <Link 
-      href="/features"
+      href="/ai"
       className="p-3 bg-green-600 hover:bg-green-800  duration-300 shadow-inner cursor-pointer flex gap-x-5 justify-between"
           onMouseEnter={() => setIsHovered(!isHovered)}
           onMouseLeave={() => setIsHovered(!isHovered)}

@@ -14,9 +14,9 @@ const NavBar = () => {
       <header className=" fixed bg-white top-0 left-0 w-full border-b border-slate-400 z-50">
         <nav className="flex justify-between items-center px-6 md:px-16 py-3">
           {/* Logo */}
-          <h1 className="font-extrabold text-xl text-green-800 tracking-wide cursor-pointer">
+          <Link href="/" className="font-extrabold text-xl text-green-800 tracking-wide cursor-pointer">
             🍀 pulse
-          </h1>
+          </Link>
 
           {/* Profile Button */}
           <button
