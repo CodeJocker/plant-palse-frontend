@@ -2,7 +2,7 @@ import React from "react";
 import { Bot, Search } from "lucide-react";
 import Link from "next/link";
 import BottomNav from "../../components/bottomBar";
-import NavBar from "../../components/heading";
+import { HiArrowLeft } from "react-icons/hi";
 
 const features = [
   {
@@ -26,7 +26,15 @@ const features = [
 const page = () => {
   return (
     <>
-      <NavBar />
+       {/* Top Nav */}
+<div className="fixed top-0 left-0 flex items-center  shadow-lg px-4 py-4 bg-white w-full h-14 z-50">
+  <Link href="/ai" className="flex items-center gap-2">
+    <HiArrowLeft className="text-black text-xl" />
+  </Link>
+  <h2 className="absolute left-1/6 transform -translate-x-1/2 text-black font-semibold text-base sm:text-lg truncate">
+    Prompt
+  </h2>
+</div>
       <div className="theme flex flex-col items-center py-15 px-4 sm:px-12 lg:px-24 ">
         <h1 className="text-3xl sm:text-4xl font-bold text-white mb-8 sm:mb-10 tracking-tight text-center">
           AI Features

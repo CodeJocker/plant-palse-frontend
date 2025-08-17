@@ -16,17 +16,10 @@ const Index = () => {
             </div>
             <h1 className="font-extrabold text-5xl md:text-6xl leading-tight mb-2 tracking-tight">
               <span className="text-green-600 drop-shadow-lg">Plant</span>
-<<<<<<< HEAD
               <span className="text-gray-500">Pulse</span>
             </h1>
             <h2 className="text-2xl md:text-3xl font-mono text-black mb-4">
               Welcome to the <span className="text-green-800">PlantPulse</span>{" "}
-=======
-              <span className="text-gray-200">Palse</span>
-            </h1>
-            <h2 className="text-2xl md:text-3xl font-mono text-gray-200 mb-4">
-              Welcome to the <span className="text-green-600">PlantPalse</span>{" "}
->>>>>>> ede975ecf689e3ac432eb1e9564e5d0ade3235c1
               Foundation
             </h2>
           </header>
