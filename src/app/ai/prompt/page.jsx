@@ -21,14 +21,6 @@ const promptFeatures = [
       href: "/ai/prompt/prompt-history",
       color: "from-yellow-700 to-yellow-500",
     },
-    {
-      title: "AI Knowledge Base",
-      description:
-        "Browse curated plant disease information and AI-generated guides.",
-      icon: <FileText className="w-8 h-8 text-purple-400" />,
-      href: "/ai/knowledge",
-      color: "from-purple-700 to-purple-500",
-    },
 ];
 
 const page = () => {

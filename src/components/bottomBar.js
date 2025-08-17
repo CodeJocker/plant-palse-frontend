@@ -1,5 +1,5 @@
 "use client"
-import { Bot } from "lucide-react";
+import { Bot, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { FaHome, FaCamera, FaLeaf, FaPills, FaRobot } from "react-icons/fa";
@@ -9,8 +9,8 @@ export default function BottomNav() {
 
   const navItems = [
     { id: "home", label: "Home", icon: <FaHome /> , href:"/" },
-    { id: "camera", label: "Camera", icon: <FaRobot /> , href:"/ai" },
-    { id: "medicine", label: "Medicine", icon: <FaPills /> , href:"/" },
+    { id: "Bot", label: "Bot", icon: <FaRobot /> , href:"/ai" },
+    { id: "medicine", label: "Medicine", icon: <ShoppingCart /> , href:"/" },
     { id: "leaf", label: "Leaf", icon: <FaLeaf /> , href:"/" },
   ];
 

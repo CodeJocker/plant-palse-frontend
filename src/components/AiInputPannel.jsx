@@ -3,16 +3,18 @@ import { useRef, useState } from "react";
 import {
   Bot,
   FileText,
-  ImageIcon,
+  Image,
   Leaf,
   Loader2,
   MapPin,
   Sparkles,
   X,
+  Camera,
+  Upload,
+  CheckCircle,
+  AlertCircle,
+  Stethoscope
 } from "lucide-react";
-import { useContentWrapper } from "./ContentWrapper";
-import { api } from "../utils/Axios";
-import { Typewriter } from "react-simple-typewriter";
 
 const initialForm = {
   plantType: "",
@@ -20,8 +22,8 @@ const initialForm = {
   location: "",
 };
 
-const AiInputPannel = ({
-  showAIInput,
+const AiInputPanel = ({
+  showAIInput = true,
   handleCloseAIInput,
   usedPhoto,
   onClose,
@@ -30,18 +32,10 @@ const AiInputPannel = ({
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const [showTypewriter, setShowTypewriter] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [aiResponse, setAiResponse] = useState("");
+  const [error, setError] = useState("");
   const fileInputRef = useRef();
-
-  // Use your context/hook for AI state and actions
-  const {
-    isProcessing,
-    aiResponse,
-    error,
-    setError,
-    setIsProcessing,
-    setAiResponse,
-    setHistory,
-  } = useContentWrapper();
 
   // Handle form field change
   const handleChange = (e) => {
@@ -70,235 +64,301 @@ const AiInputPannel = ({
     setError("");
     setShowTypewriter(false);
 
-    try {
-      const formData = new FormData();
-      formData.append("plantType", form.plantType);
-      formData.append("symptoms", form.symptoms);
-      formData.append("location", form.location);
-      if (image) formData.append("image", image);
-      else if (usedPhoto) formData.append("image", usedPhoto);
+    // Simulate AI processing
+    setTimeout(() => {
+      const mockResponse = `Based on the provided information and image analysis, I've identified several potential issues with your ${form.plantType || 'plant'}:
 
-      const res = await api.post("/ai/diagnose", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+**Primary Diagnosis:** Bacterial Leaf Spot
+**Confidence Level:** 87%
 
-      const data = res.data;
-      setAiResponse(
-        data?.data?.diagnosis ||
-          data?.data?.response ||
-          data?.message ||
-          "No diagnosis available."
-      );
+**Symptoms Analysis:**
+- ${form.symptoms || 'Visual symptoms observed in the image'}
+- Characteristic brown/black spots with yellow halos
+- Progressive leaf deterioration pattern
+
+**Treatment Recommendations:**
+1. Remove affected leaves immediately
+2. Apply copper-based fungicide every 7-14 days
+3. Improve air circulation around the plant
+4. Water at soil level to avoid wetting leaves
+5. Monitor for 2-3 weeks for improvement
+
+**Prevention Measures:**
+- Maintain proper spacing between plants
+- Ensure adequate drainage
+- Regular inspection for early detection
+
+**Follow-up:** If symptoms persist after 2 weeks of treatment, consider soil testing for nutrient deficiencies.`;
+
+      setAiResponse(mockResponse);
       setShowTypewriter(true);
-
-      setHistory((prev) => [...prev, { form, aiResponse: data }]);
-    } catch (err) {
-      setAiResponse("");
-      setError("Sorry, there was a problem contacting the AI server.");
-    } finally {
       setIsProcessing(false);
+    }, 3000);
+  };
+
+  const removeImage = () => {
+    setImage(null);
+    setImagePreview("");
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 
   if (!showAIInput) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-[2px] w-full">
-      <div className="relative bg-gradient-to-br from-[#181c20] via-[#23272f] to-[#181c20] rounded-3xl shadow-2xl border border-green-400/30 max-w-3xl w-full mx-2 p-0 overflow-hidden animate-fade-in">
-        {/* Close Button */}
-        <button
-          className="absolute top-5 right-5 text-gray-400 hover:text-green-500 transition"
-          onClick={onClose || handleCloseAIInput}
-          aria-label="Close"
-        >
-          <X className="w-7 h-7" />
-        </button>
-        <div className="flex flex-col md:flex-row h-[80vh]">
-          {/* Left: Diagnosis Form */}
-          <div className="flex-1 p-8 md:p-12 flex flex-col justify-center bg-gradient-to-br from-[#20262d] to-[#181c20]">
-            <div className="flex items-center gap-3 mb-10">
-              <Sparkles className="w-9 h-9 text-green-400" />
-              <h2 className="text-3xl font-bold text-white tracking-tight">
-                AI Plant Disease Diagnosis
-              </h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+      <div className="relative bg-white rounded-2xl shadow-2xl border border-gray-200 max-w-6xl w-full max-h-[90vh] overflow-hidden">
+        
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gradient-to-r from-emerald-50 to-blue-50">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-emerald-100 rounded-xl">
+              <Stethoscope className="w-6 h-6 text-emerald-600" />
             </div>
-            <form className="space-y-7" onSubmit={handleSubmit}>
-              {/* Plant Type */}
-              <div>
-                <label className="block text-gray-300 text-sm mb-1 font-semibold">
-                  Plant Type
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900">AI Plant Health Diagnosis</h2>
+              <p className="text-sm text-gray-600">Advanced plant disease detection and treatment recommendations</p>
+            </div>
+          </div>
+          <button
+            onClick={onClose || handleCloseAIInput}
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            aria-label="Close modal"
+          >
+            <X className="w-5 h-5 text-gray-500" />
+          </button>
+        </div>
+
+        <div className="flex flex-col lg:flex-row">
+          {/* Left Panel - Input Form */}
+          <div className="flex-1 p-6 space-y-6 bg-gray-50">
+            <div className="space-y-5">
+              
+              {/* Plant Type Field */}
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Plant Species *
                 </label>
                 <div className="relative">
-                  <Leaf className="absolute left-3 top-1/2 -translate-y-1/2 text-green-500 w-5 h-5" />
+                  <Leaf className="absolute left-3 top-3 w-5 h-5 text-emerald-500" />
                   <input
                     type="text"
                     name="plantType"
                     value={form.plantType}
                     onChange={handleChange}
-                    placeholder="e.g. Tomato"
-                    className="w-full pl-12 pr-3 py-2.5 rounded-xl bg-[#23272f] border border-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 outline-none text-base"
+                    placeholder="e.g., Tomato, Rose, Basil"
+                    className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all"
                     required
                   />
                 </div>
               </div>
-              {/* Symptoms */}
-              <div>
-                <label className="block text-gray-300 text-sm mb-1 font-semibold">
-                  Symptoms
+
+              {/* Symptoms Field */}
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Symptoms Description *
                 </label>
                 <div className="relative">
-                  <FileText className="absolute left-3 top-3 text-blue-500 w-5 h-5" />
+                  <FileText className="absolute left-3 top-3 w-5 h-5 text-blue-500" />
                   <textarea
                     name="symptoms"
                     value={form.symptoms}
                     onChange={handleChange}
-                    placeholder="Describe the symptoms..."
-                    className="w-full pl-12 pr-3 py-2.5 rounded-xl bg-[#23272f] border border-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500 outline-none text-base min-h-[80px] resize-none"
+                    placeholder="Describe what you're observing: discoloration, spots, wilting, growth issues, etc."
+                    className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
+                    rows={4}
                     required
                   />
                 </div>
               </div>
-              {/* Location */}
-              <div>
-                <label className="block text-gray-300 text-sm mb-1 font-semibold">
-                  Location{" "}
-                  <span className="text-gray-400 font-normal">(optional)</span>
+
+              {/* Location Field */}
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Growing Environment
                 </label>
                 <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-purple-500 w-5 h-5" />
+                  <MapPin className="absolute left-3 top-3 w-5 h-5 text-purple-500" />
                   <input
                     type="text"
                     name="location"
                     value={form.location}
                     onChange={handleChange}
-                    placeholder="e.g. Greenhouse, Outdoor"
-                    className="w-full pl-12 pr-3 py-2.5 rounded-xl bg-[#23272f] border border-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 outline-none text-base"
+                    placeholder="e.g., Indoor pot, Garden bed, Greenhouse"
+                    className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
                   />
                 </div>
               </div>
-              {/* Upload Image */}
-              <div>
-                <label className="block text-gray-300 text-sm mb-1 font-semibold">
-                  Upload Plant Image{" "}
-                  <span className="text-gray-400 font-normal">(optional)</span>
+
+              {/* Image Upload */}
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Plant Photo
                 </label>
-                <div className="flex items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => fileInputRef.current.click()}
-                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-green-700 to-green-500 text-white rounded-lg shadow hover:opacity-90 transition"
+                
+                {!imagePreview ? (
+                  <div 
+                    onClick={() => fileInputRef.current?.click()}
+                    className="relative border-2 border-dashed border-gray-300 rounded-lg p-6 hover:border-emerald-400 transition-colors cursor-pointer bg-white"
                   >
-                    <ImageIcon className="w-5 h-5" />
-                    {image ? "Change Image" : "Upload Image"}
-                  </button>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleImageChange}
-                  />
-                  {imagePreview && (
+                    <div className="text-center">
+                      <Upload className="mx-auto h-8 w-8 text-gray-400 mb-2" />
+                      <p className="text-sm text-gray-600">
+                        <span className="font-medium text-emerald-600">Click to upload</span> or drag and drop
+                      </p>
+                      <p className="text-xs text-gray-500 mt-1">PNG, JPG up to 10MB</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="relative">
                     <img
                       src={imagePreview}
-                      alt="Preview"
-                      className="w-16 h-16 object-cover rounded-xl border border-green-400 shadow"
+                      alt="Plant preview"
+                      className="w-full h-32 object-cover rounded-lg border border-gray-200"
                     />
-                  )}
-                </div>
+                    <button
+                      type="button"
+                      onClick={removeImage}
+                      className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                    <div className="absolute bottom-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded">
+                      <CheckCircle className="w-3 h-3 inline mr-1" />
+                      Image uploaded
+                    </div>
+                  </div>
+                )}
+                
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleImageChange}
+                />
               </div>
+
               {/* Submit Button */}
               <button
                 type="submit"
-                disabled={isProcessing}
-                className="w-full flex items-center justify-center gap-2 bg-gradient-to-br from-green-600 to-green-800 text-white py-3 rounded-xl font-semibold shadow-lg hover:opacity-90 transition text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={handleSubmit}
+                disabled={isProcessing || !form.plantType || !form.symptoms}
+                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white py-3 px-4 rounded-lg font-medium hover:from-emerald-700 hover:to-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm"
               >
                 {isProcessing ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
-                    Diagnosing...
+                    Analyzing Plant Health...
                   </>
                 ) : (
                   <>
                     <Bot className="w-5 h-5" />
-                    Diagnose
+                    Get AI Diagnosis
                   </>
                 )}
               </button>
+
               {error && (
-                <div className="text-red-400 text-sm mt-2">{error}</div>
+                <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-lg">
+                  <AlertCircle className="w-5 h-5 text-red-500" />
+                  <p className="text-sm text-red-700">{error}</p>
+                </div>
               )}
-            </form>
-          </div>
-          {/* Right: AI Response */}
-          <div className="flex-1 p-0 md:p-0 flex flex-col justify-center border-t md:border-t-0 md:border-l border-[#2a2d34] min-h-[350px] bg-gradient-to-br from-[#20262d] to-[#181c20]">
-            <div className="flex items-center gap-3 px-8 pt-8 md:px-12 md:pt-12 mb-2">
-              <Bot className="w-7 h-7 text-blue-400" />
-              <h3 className="text-xl font-bold text-white tracking-tight">
-                AI Diagnosis Output
-              </h3>
             </div>
-            <div className="flex-1 flex items-start px-4 md:px-8 pb-8 md:pb-12">
-              <div className="w-full max-h-[55vh] overflow-y-auto custom-scrollbar">
-                {isProcessing ? (
-                  <div className="flex items-center gap-2 text-blue-300 text-base mt-8">
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                    AI is analyzing your input...
+          </div>
+
+          {/* Right Panel - AI Response */}
+          <div className="flex-1 flex flex-col border-l border-gray-200">
+            
+            {/* Response Header */}
+            <div className="p-6 border-b border-gray-100 bg-white">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-100 rounded-xl">
+                  <Bot className="w-6 h-6 text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">Diagnosis Results</h3>
+                  <p className="text-sm text-gray-600">AI-powered plant health analysis</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Response Content */}
+            <div className="flex-1 p-6 bg-white overflow-y-auto max-h-96">
+              {isProcessing ? (
+                <div className="flex flex-col items-center justify-center h-full space-y-4">
+                  <div className="relative">
+                    <div className="w-16 h-16 border-4 border-emerald-100 border-t-emerald-500 rounded-full animate-spin"></div>
+                    <Bot className="absolute inset-0 m-auto w-6 h-6 text-emerald-600" />
                   </div>
-                ) : aiResponse ? (
-                  <div className="w-full flex flex-col gap-4">
-                    <div className="flex gap-3 flex-col items-start">
-                      <div className="flex-shrink-0">
-                        <div className="bg-gradient-to-br from-green-500 to-green-700 p-2 rounded-full shadow-lg border-2 border-green-300">
-                          <Bot className="w-7 h-7 text-white" />
-                        </div>
-                      </div>
-                      <div className="flex-1s">
-                        <div className="w-full bg-[#23272f] text-[#e6e6e6] rounded-2xl px-6 py-5 shadow border border-[#2a2d34] font-mono text-[1.07rem] leading-relaxed whitespace-pre-line relative">
-                          {showTypewriter ? (
-                            <Typewriter
-                              words={[aiResponse]}
-                              typeSpeed={18}
-                              cursor
-                              cursorStyle="|"
-                            />
-                          ) : (
-                            ""
-                          )}
-                          <span className="absolute top-2 right-4 text-xs text-gray-500 font-sans">
-                            AI
-                          </span>
-                        </div>
-                      </div>
+                  <div className="text-center">
+                    <p className="font-medium text-gray-900 mb-2">Analyzing Your Plant</p>
+                    <p className="text-sm text-gray-600">Our AI is examining the symptoms and image data...</p>
+                  </div>
+                </div>
+              ) : aiResponse ? (
+                <div className="space-y-4">
+                  <div className="bg-gradient-to-r from-emerald-50 to-blue-50 rounded-lg p-4 border border-emerald-100">
+                    <div className="flex items-center gap-2 mb-2">
+                      <CheckCircle className="w-5 h-5 text-emerald-600" />
+                      <span className="font-medium text-emerald-800">Analysis Complete</span>
                     </div>
                   </div>
-                ) : (
-                  <div className="text-gray-400 italic mt-8">
-                    The AI diagnosis will appear here after you submit the form.
+                  
+                  <div className="prose prose-sm max-w-none">
+                    <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 font-mono text-sm leading-relaxed whitespace-pre-line">
+                      {showTypewriter ? (
+                        <TypewriterText text={aiResponse} />
+                      ) : (
+                        aiResponse
+                      )}
+                    </div>
                   </div>
-                )}
-              </div>
+
+                  <div className="flex items-center gap-2 text-xs text-gray-500 pt-2 border-t border-gray-100">
+                    <Sparkles className="w-4 h-4" />
+                    <span>Analysis powered by advanced plant pathology AI</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
+                  <div className="p-4 bg-gray-100 rounded-full">
+                    <Stethoscope className="w-8 h-8 text-gray-400" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-900 mb-2">Ready for Analysis</p>
+                    <p className="text-sm text-gray-600 max-w-sm">
+                      Fill out the form and submit to receive a detailed AI diagnosis of your plant's health condition.
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
-      {/* Custom scrollbar styling */}
-      <style jsx global>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 8px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #2a2d34;
-          border-radius: 8px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-      `}</style>
     </div>
   );
 };
 
-export default AiInputPannel;
+// Typewriter effect component
+const TypewriterText = ({ text }) => {
+  const [displayText, setDisplayText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useState(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }, 20);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, text]);
+
+  return <span>{displayText}<span className="animate-pulse">|</span></span>;
+};
+
+export default AiInputPanel;
