@@ -1,54 +1,223 @@
+"use client";
 
+import { useState, useRef } from "react";
+import {
+  Sparkles,
+  Loader2,
+  X,
+  Leaf,
+  FileText,
+  MapPin,
+  ImageIcon,
+  Bot,
+} from "lucide-react";
 
-const AiResponse = ({ search , setSearch , simulateAIResponse , isProcessing , aiResponse  }) => {
+const initialForm = {
+  plantType: "",
+  symptoms: "",
+  location: "",
+};
+
+const AiResponse = ({
+  open,
+  onClose,
+  simulateAIResponse,
+  isProcessing,
+  aiResponse,
+  error,
+}) => {
+  const [form, setForm] = useState(initialForm);
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
+  const fileInputRef = useRef();
+
+  if (!open) return null;
+
+  // handle form field change
+  const handleChange = (e) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  // handle image upload
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  // submit form with simulateAIResponse from the hook
+  const handleSubmit = (e) => {
+    simulateAIResponse(e, form, image);
+  };
+
   return (
-    <div className="p-4">
-      <div className="flex items-center gap-3 mb-3">
-        <div className="w-8 h-8 bg-green-800 rounded-full flex items-center justify-center">
-          <svg width="16" height="16" fill="white" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-          </svg>
-        </div>
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Describe what you want to analyze..."
-          className="flex-1 px-3 py-2 rounded-xl bg-gray-50 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all"
-          onKeyPress={(e) => e.key === "Enter" && simulateAIResponse()}
-        />
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in">
+      <div className="relative bg-gradient-to-br from-gray-900 via-gray-950 to-gray-900 rounded-2xl shadow-2xl border border-green-200 max-w-2xl w-full p-0 overflow-hidden">
+        {/* Close Button */}
         <button
-          onClick={simulateAIResponse}
-          disabled={isProcessing || !search.trim()}
-          className="px-4 py-2 bg-green-800 text-white rounded-xl font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all"
+          className="absolute top-4 right-4 text-gray-400 hover:text-green-500 transition"
+          onClick={onClose}
+          aria-label="Close"
         >
-          {isProcessing ? (
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-              <span className="text-sm">Analyzing...</span>
-            </div>
-          ) : (
-            "Analyze"
-          )}
+          <X className="w-6 h-6" />
         </button>
-      </div>
 
-      {aiResponse && (
-        <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 border border-blue-200/50">
-          <div className="flex items-start gap-3">
-            <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-              <svg width="12" height="12" fill="white" viewBox="0 0 24 24">
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+        <div className="flex flex-col md:flex-row">
+          {/* Left: Diagnosis Form */}
+          <div className="flex-1 p-8 md:p-10 flex flex-col justify-center">
+            <div className="flex items-center gap-3 mb-8">
+              <Sparkles className="w-8 h-8 text-green-400" />
+              <h2 className="text-2xl font-bold text-white tracking-tight">
+                AI Plant Disease Diagnosis
+              </h2>
             </div>
-            <p className="text-gray-700 text-sm leading-relaxed">
-              {aiResponse}
-            </p>
+
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              {/* Plant Type */}
+              <div>
+                <label className="block text-gray-400 text-sm mb-1 font-medium">
+                  Plant Type
+                </label>
+                <div className="relative">
+                  <Leaf className="absolute left-3 top-1/2 -translate-y-1/2 text-green-500 w-4 h-4" />
+                  <input
+                    type="text"
+                    name="plantType"
+                    value={form.plantType}
+                    onChange={handleChange}
+                    placeholder="e.g. Tomato"
+                    className="w-full pl-10 pr-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 outline-none text-base"
+                    required
+                  />
+                </div>
+              </div>
+
+              {/* Symptoms */}
+              <div>
+                <label className="block text-gray-400 text-sm mb-1 font-medium">
+                  Symptoms
+                </label>
+                <div className="relative">
+                  <FileText className="absolute left-3 top-3 text-blue-500 w-4 h-4" />
+                  <textarea
+                    name="symptoms"
+                    value={form.symptoms}
+                    onChange={handleChange}
+                    placeholder="Describe the symptoms..."
+                    className="w-full pl-10 pr-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500 outline-none text-base min-h-[80px] resize-none"
+                    required
+                  />
+                </div>
+              </div>
+
+              {/* Location */}
+              <div>
+                <label className="block text-gray-400 text-sm mb-1 font-medium">
+                  Location (optional)
+                </label>
+                <div className="relative">
+                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-purple-500 w-4 h-4" />
+                  <input
+                    type="text"
+                    name="location"
+                    value={form.location}
+                    onChange={handleChange}
+                    placeholder="e.g. Greenhouse, Outdoor"
+                    className="w-full pl-10 pr-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 outline-none text-base"
+                  />
+                </div>
+              </div>
+
+              {/* Upload Image */}
+              <div>
+                <label className="block text-gray-400 text-sm mb-1 font-medium">
+                  Upload Plant Image (optional)
+                </label>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current.click()}
+                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-green-700 to-green-500 text-white rounded-lg shadow hover:opacity-90 transition"
+                  >
+                    <ImageIcon className="w-5 h-5" />
+                    {image ? "Change Image" : "Upload Image"}
+                  </button>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleImageChange}
+                  />
+                  {imagePreview && (
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      className="w-14 h-14 object-cover rounded-lg border border-green-400 shadow"
+                    />
+                  )}
+                </div>
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={isProcessing}
+                className="w-full flex items-center justify-center gap-2 bg-gradient-to-br from-green-600 to-green-800 text-white py-3 rounded-lg font-semibold shadow-lg hover:opacity-90 transition text-base disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isProcessing ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Diagnosing...
+                  </>
+                ) : (
+                  <>
+                    <Bot className="w-5 h-5" />
+                    Diagnose
+                  </>
+                )}
+              </button>
+
+              {error && (
+                <div className="text-red-400 text-sm mt-2">{error}</div>
+              )}
+            </form>
+          </div>
+
+          {/* Right: AI Response */}
+          <div className="flex-1 p-8 md:p-10 flex flex-col justify-center border-t md:border-t-0 md:border-l border-gray-800 min-h-[350px] bg-gradient-to-br from-gray-900 via-gray-950 to-gray-900">
+            <div className="flex items-center gap-3 mb-6">
+              <Bot className="w-7 h-7 text-blue-400" />
+              <h3 className="text-xl font-bold text-white tracking-tight">
+                AI Diagnosis Output
+              </h3>
+            </div>
+            <div className="flex-1 flex items-start">
+              {isProcessing ? (
+                <div className="flex items-center gap-2 text-blue-300 text-base">
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  AI is analyzing your input...
+                </div>
+              ) : aiResponse ? (
+                <div className="bg-gradient-to-br from-blue-50/80 to-green-50/80 rounded-xl p-6 border border-blue-200/60 shadow text-gray-900 text-base leading-relaxed font-medium animate-fade-in">
+                  {aiResponse}
+                </div>
+              ) : (
+                <div className="text-gray-400 italic">
+                  The AI diagnosis will appear here after you submit the form.
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
-}
+};
 
-export default AiResponse
+export default AiResponse;

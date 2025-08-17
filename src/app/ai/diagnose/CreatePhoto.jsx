@@ -1,16 +1,16 @@
 "use client";
 
-import AiResponse from "../../components/AiResponse";
+import AiResponse from "../../../components/AiResponse";
 // import ActionButtonComponents from "../../components/ActionButtonComponents";
-import CameraControll from "../../components/CameraControll";
-import TopSideComponent from "../../components/TopSide";
+import CameraControll from "../../../components/CameraControll";
+import TopSideComponent from "../../../components/TopSide";
 import { ArrowLeft, CheckLine } from "lucide-react";
-import GalleryModal from "../../components/GalleryModal";
-import GridOverlay from "../../components/GridOverlay";
-import BottomControlls from "../../components/BottomControlls";
-import PhotoPreviewModal from "../../components/PhotoPreviewModal";
-import AiInputPannel from "../../components/AiInputPannel";
-import { useContentWrapper } from "../../components/ContentWrapper";
+import GalleryModal from "../../../components/GalleryModal";
+import GridOverlay from "../../../components/GridOverlay";
+import BottomControlls from "../../../components/BottomControlls";
+import PhotoPreviewModal from "../../../components/PhotoPreviewModal";
+import AiInputPannel from "../../../components/AiInputPannel";
+import { useContentWrapper } from "../../../components/ContentWrapper";
 import { useRouter } from "next/navigation";
 
 export default function ProfessionalAICamera() {
@@ -37,9 +37,9 @@ export default function ProfessionalAICamera() {
     photo,
     canvasRef,
     zoom,
-    history
+    history,
   } = useContentWrapper();
-const router = useRouter()
+  const router = useRouter();
   return (
     <div className="relative w-screen h-screen bg-green-900 overflow-hidden">
       {/* Professional Header */}
@@ -137,6 +137,7 @@ const router = useRouter()
         handleCloseAIInput={handleCloseAIInput}
         showAIInput={showAIInput}
         usedPhoto={usedPhoto}
+        onclose={handleCloseAIInput}
       />
 
       {/* Gallery Modal */}

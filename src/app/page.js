@@ -1,5 +1,5 @@
 import React from "react";
-import ProfessionalAICamera from "./take-photo/CreatePhoto";
+import ProfessionalAICamera from "./ai/diagnose/CreatePhoto";
 import Index from "../layouts/Index";
 import NavBar from "../components/heading";
 import BottomNav from "../components/bottomBar";

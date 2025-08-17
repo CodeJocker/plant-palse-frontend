@@ -134,38 +134,6 @@ export const useContentWrapper = () => {
     setAiResponse("");
   };
 
-  const simulateAIResponse = async () => {
-    if (!search.trim()) return;
-
-    setIsProcessing(true);
-
-    // Simulate AI processing delay
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    const responses = [
-      "I can see this is an interesting image. The composition shows good lighting and detail.",
-      "Based on the visual elements, this appears to be a well-captured photo with clear focus.",
-      "The image quality is excellent. I notice several key features that stand out in this composition.",
-      "This is a high-quality capture. The depth and clarity are particularly noteworthy.",
-    ];
-
-    const response = responses[Math.floor(Math.random() * responses.length)];
-    setAiResponse(response);
-
-    // Add to history
-    setHistory((prev) => [
-      ...prev,
-      {
-        query: search,
-        response: response,
-        image: usedPhoto,
-        timestamp: new Date().toLocaleTimeString(),
-      },
-    ]);
-
-    setIsProcessing(false);
-  };
-
   const toggleCamera = () => {
     setFacingMode((prev) => (prev === "environment" ? "user" : "environment"));
     setCameraReady(false);
@@ -220,7 +188,6 @@ export const useContentWrapper = () => {
     handleAskAI,
     handleRetake,
     handleCloseAIInput,
-    simulateAIResponse,
     toggleCamera,
     handleZoomChange,
     handleGalleryPhotoClick,
