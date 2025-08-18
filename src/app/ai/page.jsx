@@ -13,25 +13,25 @@ const features = [
     title: "Diagnosis Assistant",
     description:
       "Diagnose plant diseases by describing symptoms or uploading images. Let AI help you identify issues.",
-    icon: <Search className="w-8 h-8 text-blue-400" />,
+    icon: <Search className="w-8 h-8 text-green-400" />,
     href: "/ai/diagnose",
-    color: "from-blue-700 to-blue-500",
+    color: "from-green-700 to-green-500",
   },
   {
     title: "Prompts Assistant",
     description:
       "Prompt plant diseases by describing symptoms or uploading images. Let AI help you identify issues.",
-    icon: <Bot className="w-8 h-8 text-blue-400" />,
+    icon: <Bot className="w-8 h-8 text-green-400" />,
     href: "/ai/prompt",
-    color: "from-blue-700 to-blue-500",
+    color: "from-green-700 to-green-500",
   },
   {
     title: "Diagnose using symptomes",
     description:
       "Provide plant symptomes orand upload image uploading images. Let AI help you identify issues.",
-    icon: <FaUserDoctor className="w-8 h-8 text-blue-400" />,
+    icon: <FaUserDoctor className="w-8 h-8 text-green-400" />,
     href: "/ai/check",
-    color: "from-blue-700 to-blue-500",
+    color: "from-green-700 to-green-500",
   },
 ];
 

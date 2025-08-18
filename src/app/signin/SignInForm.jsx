@@ -11,7 +11,7 @@ const SignInForm = () => {
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
 
-    fetch('http://localhost:3000/api/register', {
+    fetch('http://localhost:3000/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -35,7 +35,6 @@ const SignInForm = () => {
       })
       .catch(err => {
         console.error('Error:', err);
-        alert('Failed to connect to backend');
       });
   };
 

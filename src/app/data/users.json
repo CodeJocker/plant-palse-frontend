@@ -1,54 +1,9 @@
 [
   {
-    "id": 1755423680662,
-    "email": "baraka",
-    "password": "joshua"
-  },
-  {
-    "id": 1755423759706,
-    "email": "pocuv@mailinator.com",
-    "password": "Pa$$w0rd!"
-  },
-  {
-    "id": 1755424659392,
-    "email": "gupotezy@mailinator.com",
-    "password": "Pa$$w0rd!",
-    "firstName": "Dai",
-    "lastName": "Holloway"
-  },
-  {
-    "id": 1755426268760,
-    "email": "jujigojoku@mailinator.com",
-    "password": "Pa$$w0rd!"
-  },
-  {
-    "id": 1755426302808,
-    "email": "pebefupyqa@mailinator.com",
-    "password": "Pa$$w0rd!"
-  },
-  {
-    "id": 1755426500381,
-    "email": "xegosi@mailinator.com",
-    "password": "Pa$$w0rd!"
-  },
-  {
-    "id": 1755426641263,
-    "email": "nopucu@mailinator.com",
-    "password": "Pa$$w0rd!"
-  },
-  {
-    "id": 1755426674033,
-    "email": "dixavutyt@mailinator.com",
-    "password": "Pa$$w0rd!"
-  },
-  {
-    "id": 1755426854485,
-    "email": "tubi@mailinator.com",
-    "password": "Pa$$w0rd!"
-  },
-  {
-    "id": 1755426876353,
-    "email": "nycigyh@mailinator.com",
-    "password": "Pa$$w0rd!"
+    "id": 1755437293259,
+    "email": "johndoe@gmail.com",
+    "password": "@1371277#",
+    "firstName": "John",
+    "lastName": "Doe"
   }
 ]

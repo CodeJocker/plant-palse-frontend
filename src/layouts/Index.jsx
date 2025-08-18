@@ -28,7 +28,7 @@ const Index = () => {
             innovation and green technology. Join us in making a positive impact
             on the environment and future generations.
           </p>
-          <FeaturesButton />
+          {/* <FeaturesButton /> */}
         </div>
         {/* Right Side */}
         <div className="flex-1 flex items-center justify-center relative">

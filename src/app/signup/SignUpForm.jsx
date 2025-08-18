@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React from "react";
 import {
@@ -15,10 +15,10 @@ const SignUp = () => {
   const submitData = async (e) => {
     e.preventDefault();
 
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    const firstName = document.getElementById("firstName").value;
+    const lastName = document.getElementById("lastName").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
     try {
       const res = await fetch("http://localhost:3000/api/register", {
@@ -33,6 +33,7 @@ const SignUp = () => {
 
       if (res.ok) {
         alert(data.message || "Registration successful!");
+        window.location.href = "/signin";
       } else {
         alert(data.message || "Something went wrong!");
       }
@@ -64,38 +65,85 @@ const SignUp = () => {
         <form className="space-y-5" onSubmit={submitData}>
           <div className="flex gap-4">
             <div className="w-1/2">
-              <label htmlFor="firstName" className="block text-xs text-gray-600 mb-1 font-medium">First Name</label>
+              <label
+                htmlFor="firstName"
+                className="block text-xs text-gray-600 mb-1 font-medium"
+              >
+                First Name
+              </label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <input type="text" id="firstName" placeholder="First" className="bg-gray-50 border border-gray-300 w-full pl-9 pr-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm" required />
+                <input
+                  type="text"
+                  id="firstName"
+                  placeholder="First"
+                  className="bg-gray-50 border border-gray-300 w-full pl-9 pr-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
+                  required
+                />
               </div>
             </div>
             <div className="w-1/2">
-              <label htmlFor="lastName" className="block text-xs text-gray-600 mb-1 font-medium">Last Name</label>
+              <label
+                htmlFor="lastName"
+                className="block text-xs text-gray-600 mb-1 font-medium"
+              >
+                Last Name
+              </label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <input type="text" id="lastName" placeholder="Last" className="bg-gray-50 border border-gray-300 w-full pl-9 pr-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm" required />
+                <input
+                  type="text"
+                  id="lastName"
+                  placeholder="Last"
+                  className="bg-gray-50 border border-gray-300 w-full pl-9 pr-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
+                  required
+                />
               </div>
             </div>
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-xs text-gray-600 mb-1 font-medium">Email</label>
+            <label
+              htmlFor="email"
+              className="block text-xs text-gray-600 mb-1 font-medium"
+            >
+              Email
+            </label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <input type="email" id="email" required placeholder="you@email.com" className="bg-gray-50 border border-gray-300 w-full pl-9 pr-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm" />
+              <input
+                type="email"
+                id="email"
+                required
+                placeholder="you@email.com"
+                className="bg-gray-50 border border-gray-300 w-full pl-9 pr-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
+              />
             </div>
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-xs text-gray-600 mb-1 font-medium">Password</label>
+            <label
+              htmlFor="password"
+              className="block text-xs text-gray-600 mb-1 font-medium"
+            >
+              Password
+            </label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <input type="password" id="password" required placeholder="••••••••" className="bg-gray-50 border border-gray-300 w-full pl-9 pr-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm" />
+              <input
+                type="password"
+                id="password"
+                required
+                placeholder="••••••••"
+                className="bg-gray-50 border border-gray-300 w-full pl-9 pr-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
+              />
             </div>
           </div>
 
-          <button type="submit" className="w-full flex items-center justify-center gap-2 bg-green-500 text-white py-3 rounded-md font-semibold shadow hover:bg-green-600 transition text-base">
+          <button
+            type="submit"
+            className="w-full flex items-center justify-center gap-2 bg-green-500 text-white py-3 rounded-md font-semibold shadow hover:bg-green-600 transition text-base"
+          >
             <ArrowRight className="w-5 h-5" /> Sign Up
           </button>
         </form>
@@ -106,13 +154,19 @@ const SignUp = () => {
           <div className="flex-1 h-px bg-gray-300" />
         </div>
 
-        <button type="button" className="w-full flex items-center justify-center gap-3 bg-white text-gray-800 py-3 rounded-md font-semibold shadow hover:bg-gray-100 transition text-base border border-gray-300">
+        <button
+          type="button"
+          className="w-full flex items-center justify-center gap-3 bg-white text-gray-800 py-3 rounded-md font-semibold shadow hover:bg-gray-100 transition text-base border border-gray-300"
+        >
           Sign up with Google
         </button>
 
         <p className="text-center text-gray-600 text-sm mt-6">
           Already have an account?{" "}
-          <Link href="/signin" className="text-green-600 hover:underline cursor-pointer flex items-center gap-1 justify-center">
+          <Link
+            href="/signin"
+            className="text-green-600 hover:underline cursor-pointer flex items-center gap-1 justify-center"
+          >
             Login
           </Link>
         </p>
