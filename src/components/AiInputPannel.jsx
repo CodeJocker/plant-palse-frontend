@@ -33,9 +33,13 @@ const AiInputPannel = ({ showAIInput, handleCloseAIInput, usedPhoto }) => {
         formData.append("file", blob, "image.jpg");
       }
 
-      const res = await axios.post("http://localhost:5005/predict", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const res = await axios.post(
+        `${process.env.BACKEND_PREDICTION_API}/predict`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
 
       setAiResponse(res.data.result);
     } catch (err) {

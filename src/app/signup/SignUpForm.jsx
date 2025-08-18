@@ -21,7 +21,7 @@ const SignUp = () => {
     const password = document.getElementById("password").value;
 
     try {
-      const res = await fetch("http://localhost:3000/api/register", {
+      const res = await fetch(`${BACKEND_AUTH_API}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

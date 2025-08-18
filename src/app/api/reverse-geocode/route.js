@@ -12,14 +12,14 @@ export async function GET(req) {
   }
 
   try {
-    const response = await axios.get("https://nominatim.openstreetmap.org/reverse", {
+    const response = await axios.get(process.env.GEO_CODE_API, {
       params: {
         format: "json",
         lat,
         lon,
       },
       headers: {
-        "User-Agent": "Plantcast/1.0 (jehovahjules@gmail.com)", // required by OSM
+        "User-Agent": process.env.USER_AGENT, // required by OSM
       },
     });
 

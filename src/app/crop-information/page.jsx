@@ -39,7 +39,7 @@ export default function CropInformation() {
     setError("");
 
     try {
-      const res = await axios.post("http://localhost:3001/api/advice", {
+      const res = await axios.post(`${process.env.BACKEND_SEASON_API}/advice`, {
         crop: formData.crop,
         lat: location.coordinates.lat,
         lon: location.coordinates.lng,

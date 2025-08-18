@@ -11,30 +11,30 @@ const SignInForm = () => {
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
 
-    fetch('http://localhost:3000/api/login', {
-      method: 'POST',
+    fetch(`${BACKEND_AUTH_API}/login`, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email, password }),
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         if (data.ok) {
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('user', JSON.stringify(data.user));
-          window.localStorage.setItem('token', data.token);
-          window.location.href = '/features';
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
+          window.localStorage.setItem("token", data.token);
+          window.location.href = "/features";
           if (typeof window !== "undefined") {
-  localStorage.setItem("token", userToken);
-  document.cookie = `token=${userToken}; path=/; max-age=3600`; // expires in 1h
-}
+            localStorage.setItem("token", userToken);
+            document.cookie = `token=${userToken}; path=/; max-age=3600`; // expires in 1h
+          }
         } else {
-          alert(data.error || 'Login failed');
+          alert(data.error || "Login failed");
         }
       })
-      .catch(err => {
-        console.error('Error:', err);
+      .catch((err) => {
+        console.error("Error:", err);
       });
   };
 
