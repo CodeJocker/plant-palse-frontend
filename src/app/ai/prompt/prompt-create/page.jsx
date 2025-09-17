@@ -154,11 +154,11 @@ const AiPromptPanel = () => {
           {/* Chat Area */}
           <div
             ref={chatContainerRef}
-            className="flex-1 px-8 py-6 overflow-y-auto custom-scrollbar space-y-6"
+            className="flex-1 px-8 overflow-y-auto custom-scrollbar space-y-6 py-32"
           >
             {/* Welcome */}
             {!aiResponse && !error && !isProcessing && (
-              <div className="flex flex-col items-center justify-center h-full text-center">
+              <div className="flex flex-col items-center justify-center h-full text-center py-[250px] md:py-28">
                 <div className="relative mb-8">
                   <div className="p-6 rounded-3xl bg-green-100 border border-green-300">
                     <Sparkles className="w-12 h-12 text-green-600" />

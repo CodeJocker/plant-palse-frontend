@@ -29,7 +29,7 @@ const promptFeatures = [
 const page = () => {
   return (
       <div className="
-       flex flex-col items-center py-28 px-4">
+       flex flex-col items-center py-28 px-4 min-h-screen justify-center">
               {/* Top Nav */}
 <div className="fixed top-0 left-0 flex items-center  shadow-lg px-4 py-4 bg-white w-full h-14 z-50">
   <Link href="/ai" className="flex items-center gap-2">
@@ -40,7 +40,7 @@ const page = () => {
   </h2>
 </div>
 
-      <h1 className="text-3xl font-bold text-white mb-10 tracking-tight text-center">
+      <h1 className="text-3xl font-bold text-green-800 mb-10 tracking-tight text-center">
         AI Prompt Features
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full max-w-3xl">

@@ -44,14 +44,14 @@ const SignUp = () => {
   };
 
   return (
-    <div className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-gray-100 px-4">
+    <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-gray-100 px-4 py-20s mt-8">
       {/* Blobs */}
       <div className="absolute -top-24 -left-24 w-72 h-72 bg-green-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
       <div className="absolute top-1/2 -right-20 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
       <div className="absolute bottom-[-50px] left-1/3 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
 
       {/* Signup Card */}
-      <div className="relative z-10 w-full max-w-md p-6 sm:p-8 bg-white backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200">
+      <div className="relative z-10 w-full max-w-md p-6 sm:p-8 bg-white backdrop-blur-xl rounded-2xl shadow-2xl">
         <div className="flex flex-col items-center mb-6">
           <CircleUserRound className="w-14 h-14 text-green-600 mb-2" />
           <h1 className="text-3xl font-extrabold text-center mb-1 text-gray-800 tracking-wide">
@@ -171,6 +171,7 @@ const SignUp = () => {
           </Link>
         </p>
       </div>
+
     </div>
   );
 };

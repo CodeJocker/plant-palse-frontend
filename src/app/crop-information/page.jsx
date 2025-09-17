@@ -78,16 +78,16 @@ export default function CropInformation() {
 
   return (
     <>
-      <div className="bg-gray-100 min-h-screen w-full flex items-center p-4">
-        <div className="flex items-center gap-4 mb-6 fixed bg-white top-0 left-0 w-full py-4 shadow-xl px-4">
-          <button onClick={() => router.back()} className="text-2xl">
-            <HiArrowLeft />
-          </button>
-          <h1 className="text-xl font-bold text-green-800">
-            Farming Suggestions
-          </h1>
-        </div>
-        <div className="bg-white shadow-lg rounded-2xl p-6 max-w-md mx-auto">
+      <div className="flex items-center gap-4 mb-6 fixed bg-white top-0 left-0 w-full py-4 shadow-xl px-4">
+        <button onClick={() => router.back()} className="text-2xl">
+          <HiArrowLeft />
+        </button>
+        <h1 className="text-xl font-bold text-green-800">
+          Farming Suggestions
+        </h1>
+      </div>
+      <div className="bg-gray-100 min-h-screen w-full flex items-center py-4 px-16 justify-center ">
+        <div className="bg-white shadow-lg rounded-2xl p-6 w-full mx-auto sm:w-1/2">
           <h1 className="text-2xl font-bold text-green-800 mb-4 text-center">
             Crop Information
           </h1>
@@ -101,7 +101,7 @@ export default function CropInformation() {
                 name="crop"
                 value={formData.crop}
                 onChange={handleChange}
-                className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-800"
+                className="bg-gray-50 border border-gray-300 w-full  pl-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
                 placeholder="e.g. Maize, Beans, Coffee"
                 required
               />
@@ -117,7 +117,7 @@ export default function CropInformation() {
                 name="soilAcidity"
                 value={formData.soilAcidity}
                 onChange={handleChange}
-                className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-800"
+                className="bg-gray-50 border border-gray-300 w-full  pl-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
                 placeholder="e.g. 5.8"
                 required
               />
@@ -131,14 +131,14 @@ export default function CropInformation() {
                 name="growthStage"
                 value={formData.growthStage}
                 onChange={handleChange}
-                className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-800"
+                className="bg-gray-50 border border-gray-300 w-full  pl-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
                 required
               >
-                <option value="">Select stage</option>
-                <option value="germination">Germination</option>
-                <option value="vegetative">Vegetative</option>
-                <option value="flowering">Flowering</option>
-                <option value="fruiting">Fruiting</option>
+                <option value="" className="">Select stage</option>
+                <option value="germination" className="">Germination</option>
+                <option value="vegetative" className="">Vegetative</option>
+                <option value="flowering" className="">Flowering</option>
+                <option value="fruiting" className="">Fruiting</option>
               </select>
             </div>
 
@@ -150,7 +150,7 @@ export default function CropInformation() {
                 name="variety"
                 value={formData.variety}
                 onChange={handleChange}
-                className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-800"
+                className="bg-gray-50 border border-gray-300 w-full  pl-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
                 placeholder="e.g. Drought-resistant, High yield"
                 required
               />

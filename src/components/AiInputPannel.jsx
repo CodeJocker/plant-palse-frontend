@@ -34,7 +34,7 @@ const AiInputPannel = ({ showAIInput, handleCloseAIInput, usedPhoto }) => {
       }
 
       const res = await axios.post(
-        `${process.env.BACKEND_PREDICTION_API}/predict`,
+        `${process.env.NEXT_PUBLIC_BACKEND_PREDICTION_API}/predict`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
