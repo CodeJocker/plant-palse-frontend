@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import { api } from "../../utils/Axios"; // Use consistent Axios instance
+// import { api } from "../../utils/Axios"; // Use consistent Axios instance
 import useGeolocation from "../../hooks/useGeolocation";
-import Suggestions from "../../components/Suggestions"; // Updated import path
+import Suggestions from "../suggestions/page"; // Updated import path
 import { HiArrowLeft } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 import BottomNav from "../../components/bottomBar";
