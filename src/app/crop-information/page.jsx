@@ -7,7 +7,7 @@ import { HiArrowLeft } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 import BottomNav from "../../components/bottomBar";
 import axios from "axios";
-import { headers } from "next/headers";
+// import { headers } from "next/headers";
 
 export default function CropInformation() {
   const router = useRouter();
