@@ -1,13 +1,32 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Bot, Loader2, X, Calendar, Tag, MessageSquare, Brain, Copy, CheckCircle } from "lucide-react";
+import {
+  Bot,
+  Loader2,
+  X,
+  Calendar,
+  Tag,
+  MessageSquare,
+  Brain,
+  Copy,
+  CheckCircle,
+} from "lucide-react";
 import { api } from "../../../../utils/Axios";
+import { useRouter } from "next/navigation";
 
-const PromptDetail = ({ PromptId, onClose }) => {
+const Page = ({ params }) => {
+  const { PromptId } = params; // Extract dynamic route param from params
+  const router = useRouter(); // Use router for navigation
+
   const [prompt, setPrompt] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [copiedField, setCopiedField] = useState("");
+
+  // Define onClose to navigate back or close the modal
+  const onClose = () => {
+    router.back(); // Navigate to the previous page
+  };
 
   useEffect(() => {
     const fetchPrompt = async () => {
@@ -31,32 +50,32 @@ const PromptDetail = ({ PromptId, onClose }) => {
       setCopiedField(field);
       setTimeout(() => setCopiedField(""), 2000);
     } catch (err) {
-      console.error('Failed to copy text: ', err);
+      console.error("Failed to copy text: ", err);
     }
   };
 
   const formatDate = (dateString) => {
     if (!dateString) return "—";
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
   const getTypeColor = (type) => {
     const colors = {
-      general: 'from-blue-500 to-blue-600',
-      diagnosis: 'from-red-500 to-red-600',
-      treatment: 'from-green-500 to-green-600',
-      prevention: 'from-yellow-500 to-yellow-600',
-      disease_info: 'from-purple-500 to-purple-600',
-      ai_treatment: 'from-emerald-500 to-emerald-600'
+      general: "from-blue-500 to-blue-600",
+      diagnosis: "from-red-500 to-red-600",
+      treatment: "from-green-500 to-green-600",
+      prevention: "from-yellow-500 to-yellow-600",
+      disease_info: "from-purple-500 to-purple-600",
+      ai_treatment: "from-emerald-500 to-emerald-600",
     };
-    return colors[type] || 'from-gray-500 to-gray-600';
+    return colors[type] || "from-gray-500 to-gray-600";
   };
 
   return (
@@ -95,7 +114,9 @@ const PromptDetail = ({ PromptId, onClose }) => {
                   <div className="w-16 h-16 border-4 border-green-400/30 border-t-green-400 rounded-full animate-spin"></div>
                   <Bot className="w-6 h-6 text-green-400 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
                 </div>
-                <p className="text-gray-400 mt-4 text-lg">Loading conversation details...</p>
+                <p className="text-gray-400 mt-4 text-lg">
+                  Loading conversation details...
+                </p>
               </div>
             ) : error ? (
               <div className="flex flex-col items-center justify-center py-12">
@@ -114,7 +135,11 @@ const PromptDetail = ({ PromptId, onClose }) => {
                       <div>
                         <p className="text-gray-400 text-sm">Type</p>
                         <div className="flex items-center gap-2 mt-1">
-                          <span className={`inline-block w-2 h-2 rounded-full bg-gradient-to-r ${getTypeColor(prompt.promptType)}`}></span>
+                          <span
+                            className={`inline-block w-2 h-2 rounded-full bg-gradient-to-r ${getTypeColor(
+                              prompt.promptType
+                            )}`}
+                          ></span>
                           <span className="text-white font-medium capitalize">
                             {prompt.promptType || "General"}
                           </span>
@@ -142,7 +167,9 @@ const PromptDetail = ({ PromptId, onClose }) => {
                         <p className="text-gray-400 text-sm">Status</p>
                         <div className="flex items-center gap-2 mt-1">
                           <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                          <span className="text-white font-medium">Completed</span>
+                          <span className="text-white font-medium">
+                            Completed
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -155,15 +182,24 @@ const PromptDetail = ({ PromptId, onClose }) => {
                   <div className="flex gap-4 items-start">
                     <div className="flex-shrink-0">
                       <div className="bg-gradient-to-br from-blue-500 to-blue-700 p-3 rounded-full shadow-lg border-2 border-blue-400/30">
-                        <span className="font-bold text-white text-sm">You</span>
+                        <span className="font-bold text-white text-sm">
+                          You
+                        </span>
                       </div>
                     </div>
                     <div className="flex-1">
                       <div className="bg-[#23272f] text-[#e6e6e6] rounded-2xl px-6 py-4 shadow border border-[#2a2d34] relative group">
                         <div className="flex items-center justify-between mb-2">
-                          <span className="text-xs text-gray-500 font-sans">Your Question</span>
+                          <span className="text-xs text-gray-500 font-sans">
+                            Your Question
+                          </span>
                           <button
-                            onClick={() => copyToClipboard(prompt.userPrompt || prompt.symptoms || "", "prompt")}
+                            onClick={() =>
+                              copyToClipboard(
+                                prompt.userPrompt || prompt.symptoms || "",
+                                "prompt"
+                              )
+                            }
                             className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-[#2a2d34] transition-all duration-200"
                             title="Copy prompt"
                           >
@@ -176,7 +212,9 @@ const PromptDetail = ({ PromptId, onClose }) => {
                         </div>
                         <div className="font-sans text-base leading-relaxed whitespace-pre-line">
                           {prompt.userPrompt || prompt.symptoms || (
-                            <span className="italic text-gray-500">No prompt available</span>
+                            <span className="italic text-gray-500">
+                              No prompt available
+                            </span>
                           )}
                         </div>
                       </div>
@@ -193,9 +231,16 @@ const PromptDetail = ({ PromptId, onClose }) => {
                     <div className="flex-1">
                       <div className="bg-[#23272f] text-[#e6e6e6] rounded-2xl px-6 py-4 shadow border border-[#2a2d34] relative group">
                         <div className="flex items-center justify-between mb-2">
-                          <span className="text-xs text-gray-500 font-sans">AI Response</span>
+                          <span className="text-xs text-gray-500 font-sans">
+                            AI Response
+                          </span>
                           <button
-                            onClick={() => copyToClipboard(prompt.aiResponse || prompt.diagnosis || "", "response")}
+                            onClick={() =>
+                              copyToClipboard(
+                                prompt.aiResponse || prompt.diagnosis || "",
+                                "response"
+                              )
+                            }
                             className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-[#2a2d34] transition-all duration-200"
                             title="Copy response"
                           >
@@ -208,7 +253,9 @@ const PromptDetail = ({ PromptId, onClose }) => {
                         </div>
                         <div className="font-mono text-base leading-relaxed whitespace-pre-line">
                           {prompt.aiResponse || prompt.diagnosis || (
-                            <span className="italic text-gray-500">No response available</span>
+                            <span className="italic text-gray-500">
+                              No response available
+                            </span>
                           )}
                         </div>
                       </div>
@@ -226,14 +273,22 @@ const PromptDetail = ({ PromptId, onClose }) => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {prompt.plantType && (
                         <div>
-                          <span className="text-gray-400 text-sm">Plant Type:</span>
-                          <p className="text-white font-medium">{prompt.plantType}</p>
+                          <span className="text-gray-400 text-sm">
+                            Plant Type:
+                          </span>
+                          <p className="text-white font-medium">
+                            {prompt.plantType}
+                          </p>
                         </div>
                       )}
                       {prompt.diseaseType && (
                         <div>
-                          <span className="text-gray-400 text-sm">Disease Type:</span>
-                          <p className="text-white font-medium">{prompt.diseaseType}</p>
+                          <span className="text-gray-400 text-sm">
+                            Disease Type:
+                          </span>
+                          <p className="text-white font-medium">
+                            {prompt.diseaseType}
+                          </p>
                         </div>
                       )}
                     </div>
@@ -267,8 +322,14 @@ const PromptDetail = ({ PromptId, onClose }) => {
       {/* Custom Styles */}
       <style jsx global>{`
         @keyframes fade-in {
-          from { opacity: 0; transform: scale(0.95); }
-          to { opacity: 1; transform: scale(1); }
+          from {
+            opacity: 0;
+            transform: scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
         }
         .animate-fade-in {
           animation: fade-in 0.2s ease-out;
@@ -278,7 +339,6 @@ const PromptDetail = ({ PromptId, onClose }) => {
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
           background: #2a2d34;
-          border-radius: 8px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
           background: #34393f;
@@ -291,4 +351,4 @@ const PromptDetail = ({ PromptId, onClose }) => {
   );
 };
 
-export default PromptDetail;
+export default Page;
