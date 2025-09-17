@@ -39,14 +39,17 @@ export default function CropInformation() {
     setError("");
 
     try {
-      const res = await axios.post(`${process.env.BACKEND_SEASON_API}/advice`, {
-        crop: formData.crop,
-        lat: location.coordinates.lat,
-        lon: location.coordinates.lng,
-        soilPh: parseFloat(formData.soilAcidity),
-        variety: formData.variety,
-        useAI: true,
-      });
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_SEASON_API}/advice`,
+        {
+          crop: formData.crop,
+          lat: location.coordinates.lat,
+          lon: location.coordinates.lng,
+          soilPh: parseFloat(formData.soilAcidity),
+          variety: formData.variety,
+          useAI: true,
+        }
+      );
 
       if (res.data.success) {
         setApiData(res.data.data);

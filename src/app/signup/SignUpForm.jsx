@@ -21,13 +21,16 @@ const SignUp = () => {
     const password = document.getElementById("password").value;
 
     try {
-      const res = await fetch(`${BACKEND_AUTH_API}/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ firstName, lastName, email, password }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_AUTH_API}/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ firstName, lastName, email, password }),
+        }
+      );
 
       const data = await res.json();
 

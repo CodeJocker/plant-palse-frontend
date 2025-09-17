@@ -23,45 +23,61 @@ export const useContentWrapper = () => {
   useEffect(() => {
     let isMounted = true;
 
-    const startCamera = async () => {
-      if (typeof navigator === "undefined" || !navigator.mediaDevices) {
-        setError("Camera API not supported by this browser.");
+const startCamera = async () => {
+  if (typeof navigator === "undefined" || !navigator.mediaDevices) {
+    setError("Camera API not supported by this browser.");
+    return;
+  }
+
+  try {
+    // Check permission state
+    if ("permissions" in navigator) {
+      const permission = await navigator.permissions.query({ name: "camera" });
+      if (permission.state === "denied") {
+        setError(
+          "Camera access denied. Please enable in browser settings and reload."
+        );
         return;
       }
+    }
 
-      try {
-        let mediaStream;
-        try {
-          mediaStream = await navigator.mediaDevices.getUserMedia({
-            video: {
-              facingMode: facingMode,
-              width: { ideal: 1920 },
-              height: { ideal: 1080 },
-            },
-            audio: false,
-          });
-        } catch (envError) {
-          mediaStream = await navigator.mediaDevices.getUserMedia({
-            video: true,
-            audio: false,
-          });
-        }
+    // Enumerate devices (optional)
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    const videoDevices = devices.filter((d) => d.kind === "videoinput");
+    if (videoDevices.length === 0) {
+      setError("No camera device found.");
+      return;
+    }
 
-        if (isMounted && videoRef.current) {
-          videoRef.current.srcObject = mediaStream;
-          setStream(mediaStream);
-          try {
-            await videoRef.current.play();
-            setCameraReady(true);
-          } catch (playError) {
-            setError("Failed to play video: " + playError.message);
-          }
-        }
-      } catch (err) {
-        setError("Error accessing camera: " + err.message);
-      }
-    };
+    let mediaStream;
+    try {
+      mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: { ideal: facingMode }, // Flexible
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+        },
+        audio: false,
+      });
+    } catch (envError) {
+      console.warn("Fallback constraints due to:", envError);
+      mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: false,
+      });
+    }
 
+    if (isMounted && videoRef.current) {
+      videoRef.current.srcObject = mediaStream;
+      setStream(mediaStream);
+      await videoRef.current.play();
+      setCameraReady(true);
+    }
+  } catch (err) {
+    console.error("Full error:", err.name, err.message);
+    setError(`Error accessing camera: ${err.message}. (Type: ${err.name})`);
+  }
+};
     startCamera();
 
     return () => {

@@ -25,14 +25,14 @@ const features = [
     href: "/ai/prompt",
     color: "from-green-700 to-green-500",
   },
-  {
-    title: "Diagnose using symptomes",
-    description:
-      "Provide plant symptomes orand upload image uploading images. Let AI help you identify issues.",
-    icon: <FaUserDoctor className="w-8 h-8 text-green-400" />,
-    href: "/ai/check",
-    color: "from-green-700 to-green-500",
-  },
+  // {
+  //   title: "Diagnose using symptomes",
+  //   description:
+  //     "Provide plant symptomes orand upload image uploading images. Let AI help you identify issues.",
+  //   icon: <FaUserDoctor className="w-8 h-8 text-green-400" />,
+  //   href: "/ai/check",
+  //   color: "from-green-700 to-green-500",
+  // },
 ];
 
 const page = () => {

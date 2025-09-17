@@ -16,7 +16,7 @@ const NavBar = () => {
           </Link>
 
           {/* Profile Button */}
-          <Link href="/signup">
+          {/* <Link href="/signup">
             <button
               onClick={() => setOpen(!open)}
               className="flex items-center gap-2 px-3 py-3 border-2 border-green-700 
@@ -25,7 +25,7 @@ const NavBar = () => {
             >
               <FaUser className="text-lg" />
             </button>
-          </Link>
+          </Link> */}
         </nav>
       </header>
 

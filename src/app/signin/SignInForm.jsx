@@ -11,7 +11,7 @@ const SignInForm = () => {
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
 
-    fetch(`${BACKEND_AUTH_API}/login`, {
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_AUTH_API}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
