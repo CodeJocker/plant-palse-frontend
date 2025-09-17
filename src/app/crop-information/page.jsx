@@ -1,14 +1,16 @@
 "use client";
 import { useState } from "react";
-import axios from "axios";
+import { api } from "../../utils/Axios"; // Use consistent Axios instance
 import useGeolocation from "../../hooks/useGeolocation";
-import Suggestions from "../suggestions/page";
+import Suggestions from "../../components/Suggestions"; // Updated import path
 import { HiArrowLeft } from "react-icons/hi";
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
 import BottomNav from "../../components/bottomBar";
+import axios from "axios";
+import { headers } from "next/headers";
 
 export default function CropInformation() {
-  const router = useRouter()
+  const router = useRouter();
   const [step, setStep] = useState("form"); // "form" or "results"
   const [formData, setFormData] = useState({
     crop: "",
@@ -16,11 +18,9 @@ export default function CropInformation() {
     growthStage: "",
     variety: "",
   });
-
   const [apiData, setApiData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
   const location = useGeolocation();
 
   const handleChange = (e) => {
@@ -40,7 +40,12 @@ export default function CropInformation() {
 
     try {
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_SEASON_API}/advice`,
+        `${process.env.NEXT_PUBLIC_BACKEND_SEASON_API}/api/advice`,
+        {
+          headers: {
+            "Content-Type": "application/json", // Use only one Content-Type
+          },
+        },
         {
           crop: formData.crop,
           lat: location.coordinates.lat,
@@ -60,8 +65,7 @@ export default function CropInformation() {
     } catch (err) {
       console.error("API error:", err);
       setError(
-        err.response?.data?.message ||
-          "Error fetching API: " + err.message
+        err.response?.data?.message || "Error fetching API: " + err.message
       );
     } finally {
       setLoading(false);
@@ -89,7 +93,7 @@ export default function CropInformation() {
           Farming Suggestions
         </h1>
       </div>
-      <div className="bg-gray-100 min-h-screen w-full flex items-center py-4 px-16 justify-center ">
+      <div className="bg-gray-100 min-h-screen w-full flex items-center py-4 px-16 justify-center">
         <div className="bg-white shadow-lg rounded-2xl p-6 w-full mx-auto sm:w-1/2">
           <h1 className="text-2xl font-bold text-green-800 mb-4 text-center">
             Crop Information
@@ -104,7 +108,7 @@ export default function CropInformation() {
                 name="crop"
                 value={formData.crop}
                 onChange={handleChange}
-                className="bg-gray-50 border border-gray-300 w-full  pl-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
+                className="bg-gray-50 border border-gray-300 w-full pl-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
                 placeholder="e.g. Maize, Beans, Coffee"
                 required
               />
@@ -120,7 +124,7 @@ export default function CropInformation() {
                 name="soilAcidity"
                 value={formData.soilAcidity}
                 onChange={handleChange}
-                className="bg-gray-50 border border-gray-300 w-full  pl-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
+                className="bg-gray-50 border border-gray-300 w-full pl-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
                 placeholder="e.g. 5.8"
                 required
               />
@@ -134,14 +138,14 @@ export default function CropInformation() {
                 name="growthStage"
                 value={formData.growthStage}
                 onChange={handleChange}
-                className="bg-gray-50 border border-gray-300 w-full  pl-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
+                className="bg-gray-50 border border-gray-300 w-full pl-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
                 required
               >
-                <option value="" className="">Select stage</option>
-                <option value="germination" className="">Germination</option>
-                <option value="vegetative" className="">Vegetative</option>
-                <option value="flowering" className="">Flowering</option>
-                <option value="fruiting" className="">Fruiting</option>
+                <option value="">Select stage</option>
+                <option value="germination">Germination</option>
+                <option value="vegetative">Vegetative</option>
+                <option value="flowering">Flowering</option>
+                <option value="fruiting">Fruiting</option>
               </select>
             </div>
 
@@ -153,7 +157,7 @@ export default function CropInformation() {
                 name="variety"
                 value={formData.variety}
                 onChange={handleChange}
-                className="bg-gray-50 border border-gray-300 w-full  pl-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
+                className="bg-gray-50 border border-gray-300 w-full pl-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
                 placeholder="e.g. Drought-resistant, High yield"
                 required
               />
