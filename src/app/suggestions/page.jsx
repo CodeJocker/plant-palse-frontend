@@ -3,7 +3,7 @@ import ForecastCard from "../../components/ForecastCard";
 import { HiArrowLeft } from "react-icons/hi";
 import { HiExclamationCircle } from "react-icons/hi";
 
-export default function Suggestions({ formData, location, apiData, goBack }) {
+export default function Suggestions({ location, apiData, goBack }) {
   return (
     <div className="p-4 max-w-md mx-auto bg-gray-100">
       <div className="flex items-center gap-4 mb-6 fixed bg-white top-0 left-0 w-full py-4 shadow-xl px-4">
