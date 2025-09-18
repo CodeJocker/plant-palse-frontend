@@ -1,13 +1,12 @@
 "use client";
+
 import { useState } from "react";
-// import { api } from "../../utils/Axios"; // Use consistent Axios instance
 import useGeolocation from "../../hooks/useGeolocation";
-import Suggestions from "../suggestions/page"; // Updated import path
 import { HiArrowLeft } from "react-icons/hi";
 import { useRouter } from "next/navigation";
+import Suggestions from "../../components/Suggestions";
 import BottomNav from "../../components/bottomBar";
 import axios from "axios";
-// import { headers } from "next/headers";
 
 export default function CropInformation() {
   const router = useRouter();
@@ -18,9 +17,11 @@ export default function CropInformation() {
     growthStage: "",
     variety: "",
   });
+
   const [apiData, setApiData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
   const location = useGeolocation();
 
   const handleChange = (e) => {
@@ -39,22 +40,14 @@ export default function CropInformation() {
     setError("");
 
     try {
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_SEASON_API}/api/advice`,
-        {
-          headers: {
-            "Content-Type": "application/json", // Use only one Content-Type
-          },
-        },
-        {
-          crop: formData.crop,
-          lat: location.coordinates.lat,
-          lon: location.coordinates.lng,
-          soilPh: parseFloat(formData.soilAcidity),
-          variety: formData.variety,
-          useAI: true,
-        }
-      );
+      const res = await axios.post(`${process.env.BACKEND_SEASON_API}/advice`, {
+        crop: formData.crop,
+        lat: location.coordinates.lat,
+        lon: location.coordinates.lng,
+        soilPh: parseFloat(formData.soilAcidity),
+        variety: formData.variety,
+        useAI: true,
+      });
 
       if (res.data.success) {
         setApiData(res.data.data);
@@ -85,16 +78,16 @@ export default function CropInformation() {
 
   return (
     <>
-      <div className="flex items-center gap-4 mb-6 fixed bg-white top-0 left-0 w-full py-4 shadow-xl px-4">
-        <button onClick={() => router.back()} className="text-2xl">
-          <HiArrowLeft />
-        </button>
-        <h1 className="text-xl font-bold text-green-800">
-          Farming Suggestions
-        </h1>
-      </div>
-      <div className="bg-gray-100 min-h-screen w-full flex items-center py-4 px-16 justify-center">
-        <div className="bg-white shadow-lg rounded-2xl p-6 w-full mx-auto sm:w-1/2">
+      <div className="bg-gray-100 min-h-screen w-full flex items-center p-4">
+        <div className="flex items-center gap-4 mb-6 fixed bg-white top-0 left-0 w-full py-4 shadow-xl px-4">
+          <button onClick={() => router.back()} className="text-2xl">
+            <HiArrowLeft />
+          </button>
+          <h1 className="text-xl font-bold text-green-800">
+            Farming Suggestions
+          </h1>
+        </div>
+        <div className="bg-white shadow-lg rounded-2xl p-6 max-w-md mx-auto">
           <h1 className="text-2xl font-bold text-green-800 mb-4 text-center">
             Crop Information
           </h1>
@@ -108,7 +101,7 @@ export default function CropInformation() {
                 name="crop"
                 value={formData.crop}
                 onChange={handleChange}
-                className="bg-gray-50 border border-gray-300 w-full pl-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
+                className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-800"
                 placeholder="e.g. Maize, Beans, Coffee"
                 required
               />
@@ -124,7 +117,7 @@ export default function CropInformation() {
                 name="soilAcidity"
                 value={formData.soilAcidity}
                 onChange={handleChange}
-                className="bg-gray-50 border border-gray-300 w-full pl-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
+                className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-800"
                 placeholder="e.g. 5.8"
                 required
               />
@@ -138,7 +131,7 @@ export default function CropInformation() {
                 name="growthStage"
                 value={formData.growthStage}
                 onChange={handleChange}
-                className="bg-gray-50 border border-gray-300 w-full pl-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
+                className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-800"
                 required
               >
                 <option value="">Select stage</option>
@@ -157,7 +150,7 @@ export default function CropInformation() {
                 name="variety"
                 value={formData.variety}
                 onChange={handleChange}
-                className="bg-gray-50 border border-gray-300 w-full pl-3 py-2 rounded-md text-gray-800 focus:ring-2 focus:ring-green-500 outline-none text-sm"
+                className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-800"
                 placeholder="e.g. Drought-resistant, High yield"
                 required
               />

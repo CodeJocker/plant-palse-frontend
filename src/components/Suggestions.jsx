@@ -1,5 +1,6 @@
-"use client";
-import ForecastCard from "../../components/ForecastCard";
+"use client"; // Required for client-side rendering
+
+import ForecastCard from "./ForecastCard";
 import { HiArrowLeft, HiExclamationCircle } from "react-icons/hi";
 
 export default function Suggestions({ formData, location, apiData, goBack }) {
